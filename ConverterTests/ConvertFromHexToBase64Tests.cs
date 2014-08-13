@@ -17,15 +17,6 @@ namespace ConverterTests
         }
 
         [TestMethod]
-        public void ConvertTwoCharactersWithHyphen()
-        {
-            string hex = "68-69";
-            string base64 = "aGk=";
-            Converter c = new Converter();
-            Assert.AreEqual(c.HexToBase64(hex), base64);
-        }
-
-        [TestMethod]
         public void ConvertTwoCharactersWithoutHyphen()
         {
             string hex = "6869";

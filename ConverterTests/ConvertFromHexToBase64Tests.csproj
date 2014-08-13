@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CharacterCounterTests.cs" />
     <Compile Include="ConvertFromHexToBase64Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XorTests.cs" />

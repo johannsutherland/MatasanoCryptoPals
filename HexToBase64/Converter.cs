@@ -13,23 +13,41 @@ namespace Matasano
             byte[] h = new byte[hex.Length / 2];
             int n = 0;
 
-            if (hex.Contains('-'))
+            while (n * 2 < hex.Length)
             {
-                foreach (string b in hex.Split('-'))
-                {
-                    h[n++] = (byte)int.Parse(b, System.Globalization.NumberStyles.HexNumber);
-                }
-            }
-            else
-            {
-                while (n * 2 < hex.Length)
-                {
-                    h[n] = (byte)int.Parse(hex.Substring(n * 2, 2), System.Globalization.NumberStyles.HexNumber);
-                    n++;
-                }
+                h[n] = (byte)int.Parse(hex.Substring(n * 2, 2), System.Globalization.NumberStyles.HexNumber);
+                n++;
             }
 
             return h;
+        }
+
+        public string HexToString(string hex)
+        {
+            StringBuilder result = new StringBuilder();
+            int n = 0;
+
+            while (n * 2 < hex.Length)
+            {
+                result.Append((char)int.Parse(hex.Substring(n * 2, 2), System.Globalization.NumberStyles.HexNumber));
+                n++;
+            }
+
+            return result.ToString();
+        }
+
+        public string StringToHex(string s)
+        {
+            StringBuilder result = new StringBuilder();
+            int n = 0;
+
+            foreach (char c in s)
+            {
+                result.Append(((byte)c).ToString("x"));
+                n++;
+            }
+
+            return result.ToString();
         }
 
         private string BytesToHex(byte[] result, StringBuilder sb)
