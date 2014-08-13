@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter", "HexToBase64\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertFromHexToBase64Tests", "ConverterTests\ConvertFromHexToBase64Tests.csproj", "{C128AE05-157D-4448-8A37-72CB71050466}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XorTests", "XorTests\XorTests.csproj", "{BB5A39A7-458D-44D0-A086-C84CDA927A73}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{C128AE05-157D-4448-8A37-72CB71050466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C128AE05-157D-4448-8A37-72CB71050466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C128AE05-157D-4448-8A37-72CB71050466}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB5A39A7-458D-44D0-A086-C84CDA927A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB5A39A7-458D-44D0-A086-C84CDA927A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB5A39A7-458D-44D0-A086-C84CDA927A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB5A39A7-458D-44D0-A086-C84CDA927A73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
