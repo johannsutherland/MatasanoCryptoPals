@@ -5,7 +5,7 @@ using Matasano;
 namespace ConverterTests
 {
     [TestClass]
-    public class ConverterTests
+    public class ConvertFromHexToBase64Tests
     {
         [TestMethod]
         public void ConvertOneCharacter()
