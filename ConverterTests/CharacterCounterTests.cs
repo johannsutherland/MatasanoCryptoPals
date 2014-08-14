@@ -44,8 +44,7 @@ namespace ConverterTests
             CharacterCounter cc = new CharacterCounter();
             string source = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
             char expected = 'X';
-            var result = cc.Decrypt(source);
-            var key = cc.FindKey(result);
+            var key = cc.FindKey(cc.Decrypt(source));
             Assert.AreEqual(expected, key);
         }
 
