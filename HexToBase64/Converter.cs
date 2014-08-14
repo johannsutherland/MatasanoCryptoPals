@@ -27,7 +27,7 @@ namespace Matasano
             StringBuilder result = new StringBuilder();
             int n = 0;
 
-            while (n * 2 < hex.Length)
+            while (n * 2 + 2 <= hex.Length)
             {
                 result.Append((char)int.Parse(hex.Substring(n * 2, 2), System.Globalization.NumberStyles.HexNumber));
                 n++;

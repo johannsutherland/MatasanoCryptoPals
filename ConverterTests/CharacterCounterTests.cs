@@ -48,5 +48,14 @@ namespace ConverterTests
             var key = cc.FindKey(result);
             Assert.AreEqual(expected, key);
         }
+
+        [TestMethod]
+        public void DecryptFile()
+        {
+            string expected = "Now that the party is jumping";
+            CharacterCounter cc = new CharacterCounter();
+            string result = cc.DecryptFile("encrypted.txt");
+            Assert.AreEqual(expected, result);
+        }
     }
 }
