@@ -13,7 +13,7 @@ namespace Matasano
             byte[] h = new byte[hex.Length / 2];
             int n = 0;
 
-            while (n * 2 < hex.Length)
+            while (n * 2 + 2 <= hex.Length)
             {
                 h[n] = (byte)int.Parse(hex.Substring(n * 2, 2), System.Globalization.NumberStyles.HexNumber);
                 n++;
@@ -39,20 +39,20 @@ namespace Matasano
         public string StringToHex(string s)
         {
             StringBuilder result = new StringBuilder();
-            int n = 0;
 
             foreach (char c in s)
             {
-                result.Append(((byte)c).ToString("x"));
-                n++;
+                result.Append(((byte)c).ToString("x2"));
             }
 
             return result.ToString();
         }
 
-        private string BytesToHex(byte[] result, StringBuilder sb)
+        private string BytesToHex(byte[] result)
         {
-            result.ToList().ForEach(x => sb.Append(x.ToString("x")));
+            StringBuilder sb = new StringBuilder();
+            result.ToList().ForEach(x => sb.Append(x.ToString("x2")));
+
             return sb.ToString();
         }
 
@@ -81,9 +81,7 @@ namespace Matasano
         public string Xor(string op1, string op2)
         {
             byte[] result = Xor(HexToBytes(op1), HexToBytes(op2));
-            StringBuilder sb = new StringBuilder();
-
-            return BytesToHex(result, sb);
+            return BytesToHex(result);
         }
     }
 }
