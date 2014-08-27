@@ -10,7 +10,7 @@ namespace ConverterTests
         [TestMethod]
         public void A1B1()
         {
-            CharacterCounter cc = new CharacterCounter();
+            CharacterManager cc = new CharacterManager();
             var result = cc.Frequency("AB");
 
             Assert.AreEqual(result['A'], 1);
@@ -20,7 +20,7 @@ namespace ConverterTests
         [TestMethod]
         public void A2B4()
         {
-            CharacterCounter cc = new CharacterCounter();
+            CharacterManager cc = new CharacterManager();
             var result = cc.Frequency("ABABBB");
 
             Assert.AreEqual(result['A'], 2);
@@ -30,21 +30,21 @@ namespace ConverterTests
         [TestMethod]
         public void Decrypt()
         {
-            CharacterCounter cc = new CharacterCounter();
+            XorCipher cipher = new XorCipher();
             string source = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
             string expected = "Cooking MC's like a pound of bacon";
             char expectedChar = 'X';
-            var result = cc.Decrypt(source);
+            var result = cipher.Decrypt(source);
             Assert.AreEqual(expected, result[expectedChar]);
         }
 
         [TestMethod]
         public void DecryptAndFindKey()
         {
-            CharacterCounter cc = new CharacterCounter();
+            XorCipher cipher = new XorCipher();
             string source = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
             char expected = 'X';
-            var key = cc.FindKey(cc.Decrypt(source));
+            var key = cipher.DecryptAndFindKey(source);
             Assert.AreEqual(expected, key);
         }
 
@@ -52,19 +52,19 @@ namespace ConverterTests
         public void DecryptFile()
         {
             string expected = "Now that the party is jumping" + (char)10;
-            CharacterCounter cc = new CharacterCounter();
-            string result = cc.DecryptFile("encrypted.txt");
+            XorCipher cipher = new XorCipher();
+            string result = cipher.DecryptFile("encrypted.txt");
             Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
         public void EncryptLine()
         {
-            CharacterCounter cc = new CharacterCounter();
+            XorCipher cipher = new XorCipher();
             string source = "Burning 'em, if you ain't quick and nimble" + (char)10 + "I go crazy when I hear a cymbal";
             string key = "ICE";
             string expected = "0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f";
-            string result = cc.Encrypt(source, key);
+            string result = cipher.Encrypt(source, key);
 
             Assert.AreEqual(expected, result);
         }
@@ -72,12 +72,12 @@ namespace ConverterTests
         [TestMethod]
         public void HammingDistanceOfInequalString()
         {
-            CharacterCounter cc = new CharacterCounter();
+            Converter conv = new Converter();
             string str1 = "1";
             string str2 = "12";
             try
             {
-                cc.HammingDistance(str1, str2);
+                conv.HammingDistance(str1, str2);
                 Assert.Fail();
             }
             catch (ArgumentException ex)
@@ -89,11 +89,11 @@ namespace ConverterTests
         [TestMethod]
         public void HammingDistance()
         {
-            CharacterCounter cc = new CharacterCounter();
+            Converter conv = new Converter();
             string str1 = "this is a test";
             string str2 = "wokka wokka!!!";
             int distance = 37;
-            Assert.AreEqual(distance, cc.HammingDistance(str1, str2));
+            Assert.AreEqual(distance, conv.HammingDistance(str1, str2));
         }
     }
 }

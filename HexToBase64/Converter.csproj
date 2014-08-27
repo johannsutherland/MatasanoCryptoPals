@@ -42,6 +42,7 @@
     <Compile Include="CharacterCounter.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XorCipher.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="6.txt">
