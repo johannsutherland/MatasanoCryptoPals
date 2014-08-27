@@ -5,4 +5,3 @@
 *.suo
 obj/
 bin/
-/HexToBase64/Converter.csproj.user
