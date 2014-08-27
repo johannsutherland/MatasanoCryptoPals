@@ -41,19 +41,15 @@ namespace Matasano
 
         public char FindKey(Dictionary<char, string> decrypted)
         {
-            var ratio = new Dictionary<char, float>();
-
             foreach (KeyValuePair<char, string> key in decrypted)
             {
                 var frequency = Frequency(key.Value);
+                var kvp = (from entry in frequency orderby entry.Value descending select entry);
 
-                frequency.GroupBy(x =>
+                if (kvp.All(x => GetAlphabet(true).Contains(x.Key)))
                 {
-                    if (this.GetAlphabet(true).Contains(x.Key))
-                        return "Valid";
-                    else
-                        return "Invalid";
-                });
+                    return key.Key;
+                }
             }
             return new char();
         }
