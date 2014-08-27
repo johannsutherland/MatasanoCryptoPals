@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Matasano
 {
-    public class CharacterManager
+    public class CharacterCounter
     {
         public Dictionary<char, int> Frequency(string sequence)
         {
@@ -41,15 +41,19 @@ namespace Matasano
 
         public char FindKey(Dictionary<char, string> decrypted)
         {
+            var ratio = new Dictionary<char, float>();
+
             foreach (KeyValuePair<char, string> key in decrypted)
             {
                 var frequency = Frequency(key.Value);
-                var kvp = (from entry in frequency orderby entry.Value descending select entry);
 
-                if (kvp.All(x => GetAlphabet(true).Contains(x.Key)))
+                frequency.GroupBy(x =>
                 {
-                    return key.Key;
-                }
+                    if (this.GetAlphabet(true).Contains(x.Key))
+                        return "Valid";
+                    else
+                        return "Invalid";
+                });
             }
             return new char();
         }

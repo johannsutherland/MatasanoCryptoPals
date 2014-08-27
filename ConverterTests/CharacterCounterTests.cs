@@ -10,7 +10,7 @@ namespace ConverterTests
         [TestMethod]
         public void A1B1()
         {
-            CharacterManager cc = new CharacterManager();
+            CharacterCounter cc = new CharacterCounter();
             var result = cc.Frequency("AB");
 
             Assert.AreEqual(result['A'], 1);
@@ -20,7 +20,7 @@ namespace ConverterTests
         [TestMethod]
         public void A2B4()
         {
-            CharacterManager cc = new CharacterManager();
+            CharacterCounter cc = new CharacterCounter();
             var result = cc.Frequency("ABABBB");
 
             Assert.AreEqual(result['A'], 2);

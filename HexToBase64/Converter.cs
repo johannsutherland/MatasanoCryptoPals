@@ -63,6 +63,11 @@ namespace Matasano
             return Convert.ToBase64String(bytes, Base64FormattingOptions.None);
         }
 
+        public string Base64ToHex(string base64)
+        {
+            return this.BytesToHex(Convert.FromBase64String(base64));
+        }
+
         public byte[] Xor(byte[] op1, byte[] op2)
         {
             if (op1.Length != op2.Length)
@@ -103,6 +108,24 @@ namespace Matasano
             }
 
             return difference;
+        }
+    }
+
+    public static class StringExtensions
+    {
+        public static IEnumerable<string> SplitByLength(this string s, int length)
+        {
+            for (int i = 0; i < s.Length; i += length)
+            {
+                if (i + length <= s.Length)
+                {
+                    yield return s.Substring(i, length);
+                }
+                else
+                {
+                    yield return s.Substring(i);
+                }
+            }
         }
     }
 }

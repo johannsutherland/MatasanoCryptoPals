@@ -26,6 +26,15 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        public void Base64ToHex()
+        {
+            string hex = "68";
+            string base64 = "aA==";
+            Converter c = new Converter();
+            Assert.AreEqual(c.Base64ToHex(base64), hex);
+        }
+
+        [TestMethod]
         public void Challenge1()
         {
             string hex = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d";
