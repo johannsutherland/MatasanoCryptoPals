@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -106,6 +107,26 @@ namespace Matasano
                 }
             }
             return new char();
+        }
+
+        public int HammingDistance(string str1, string str2)
+        {
+            if (str1.Length != str2.Length)
+                throw new ArgumentException("String lengths must be equal");
+
+            var bytes1 = new BitArray(Encoding.Unicode.GetBytes(str1.ToCharArray()));
+            var bytes2 = new BitArray(Encoding.Unicode.GetBytes(str2.ToCharArray()));
+
+            var results = bytes1.Xor(bytes2);
+
+            int difference = 0;
+
+            foreach (bool bit in results)
+            {
+                difference += bit ? 1 : 0;
+            }
+
+            return difference;
         }
     }
 }

@@ -67,6 +67,33 @@ namespace ConverterTests
             string result = cc.Encrypt(source, key);
 
             Assert.AreEqual(expected, result);
-        }      
+        }
+
+        [TestMethod]
+        public void HammingDistanceOfInequalString()
+        {
+            CharacterCounter cc = new CharacterCounter();
+            string str1 = "1";
+            string str2 = "12";
+            try
+            {
+                cc.HammingDistance(str1, str2);
+                Assert.Fail();
+            }
+            catch (ArgumentException ex)
+            {
+                
+            }
+        }
+      
+        [TestMethod]
+        public void HammingDistance()
+        {
+            CharacterCounter cc = new CharacterCounter();
+            string str1 = "this is a test";
+            string str2 = "wokka wokka!!!";
+            int distance = 37;
+            Assert.AreEqual(distance, cc.HammingDistance(str1, str2));
+        }
     }
 }
