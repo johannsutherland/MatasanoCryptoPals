@@ -79,7 +79,7 @@ namespace ConverterTests
         {
             XorCipher cipher = new XorCipher();
             string expected = "Terminator X: Bring the noise";
-            string[] result = cipher.BreakXorFile(@"6.txt", 2, 60, 4);
+            string[] result = cipher.BreakXorFile(@"Xor.txt", 2, 60, 4);
             Assert.AreEqual(expected, result[0]);
             Debug.WriteLine(result[1]);
         }
