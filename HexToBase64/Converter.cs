@@ -49,7 +49,7 @@ namespace Matasano
             return result.ToString();
         }
 
-        private string BytesToHex(byte[] result)
+        public string BytesToHex(byte[] result)
         {
             StringBuilder sb = new StringBuilder();
             result.ToList().ForEach(x => sb.Append(x.ToString("x2")));
