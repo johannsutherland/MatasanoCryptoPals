@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -35,7 +36,7 @@ namespace Matasano
 
             var result = new Dictionary<char, string>();
 
-            foreach (char c in cc.GetAlphabet(true))
+            foreach (char c in cc.GetAlphabet())
             {
                 string s = new string(c, hexSource.Length / 2);
                 string decrypted = conv.HexToString(conv.Xor(hexSource, conv.StringToHex(s)));
@@ -77,7 +78,10 @@ namespace Matasano
             {
                 foreach (string block in blocks)
                 {
-                    transposed[i] += block[2 * i].ToString() + block[2 * i + 1].ToString();
+                    if (2 * i + 1 < block.Length)
+                    {
+                        transposed[i] += block[2 * i].ToString() + block[2 * i + 1].ToString();
+                    }
                 }
             }
 
@@ -113,15 +117,76 @@ namespace Matasano
                     totalDistance += cv.HammingDistance(str[2 * i], str[2 * i + 1]);
                 }
 
-                result.Add(keySize, totalDistance / numberOfBlocks);
+                result.Add(keySize, ((float)totalDistance / (float)keySize));
             }
 
             return result;
         }
 
-        public void BreakXorFile(string p)
+        public string[] BreakXorFile(string location, int startKeySize = 2, int endKeySize = 60, int numberOfBlocks = 2)
         {
-            throw new NotImplementedException();
+            int take = 10;
+
+            CharacterCounter cc = new CharacterCounter();
+            Converter conv = new Converter();
+
+            string source = conv.Base64ToHex(String.Join("", File.ReadAllLines(location)));
+            var possibleKeySizes = this.FindDistancePerKeySize(startKeySize, endKeySize, source, numberOfBlocks).OrderBy(x => x.Value).Select(x => x.Key).Take(take);
+
+            foreach(var possibleKeySize in possibleKeySizes)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                var transposedBlocks = CreateAndTransposeBlocks(source, possibleKeySize);
+                var decryptedBlocks = new List<string>();
+
+                bool foundOne = false;
+
+                foreach (var block in transposedBlocks)
+                {
+                    var decrypted = this.Decrypt(block);
+                    var c = cc.FindKey(decrypted);
+                    if (c == '\0')
+                    {
+                        if (foundOne)
+                        {
+                            sb.Append('?');
+                            decryptedBlocks.Add(decrypted['A']);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        foundOne = true;
+                        sb.Append(c);
+                        decryptedBlocks.Add(decrypted[c]);
+                    }
+                }
+
+                string key = sb.ToString();
+
+                if (key.Length > 0)
+                {
+                    StringBuilder decrypted = new StringBuilder();
+                    for (int i = 0; i < decryptedBlocks[0].Length; i++)
+                    {
+                        foreach (string block in decryptedBlocks)
+                        {
+                            if (i < block.Length)
+                            {
+                                decrypted.Append(block[i]);
+                            }
+                        }
+                    }
+
+                    return new string[] { key, decrypted.ToString() };
+                }
+            }
+
+            return new string[] { "", "" };
         }
     }
 }

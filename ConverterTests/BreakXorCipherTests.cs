@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Matasano;
+using System.Diagnostics;
 
 namespace ConverterTests
 {
@@ -74,10 +75,13 @@ namespace ConverterTests
         }
 
         [TestMethod]
-        public void BreakFile()
+        public void BreakXorFile()
         {
             XorCipher cipher = new XorCipher();
-            cipher.BreakXorFile(@"6.txt");
+            string expected = "Terminator X: Bring the noise";
+            string[] result = cipher.BreakXorFile(@"6.txt", 2, 60, 4);
+            Assert.AreEqual(expected, result[0]);
+            Debug.WriteLine(result[1]);
         }
     }
 }
