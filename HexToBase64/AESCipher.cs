@@ -10,23 +10,15 @@ namespace Matasano
 {
     public class AESCipher
     {
-        public string IsECB(string location)
+        public bool IsECB(string line)
         {
             int blockSize = 16;
 
-            foreach (string line in File.ReadAllLines(location))
-            {
-                var blocks = line.SplitByLength(blockSize);
-                var groups = blocks.GroupBy(x => x);
-                var repeats = groups.Where(x => x.Count() > 1);
+            var blocks = line.SplitByLength(blockSize);
+            var groups = blocks.GroupBy(x => x);
+            var repeats = groups.Where(x => x.Count() > 1);
 
-                if (repeats.Count() > 0)
-                {
-                    return line;
-                }
-            }
-
-            return "";
+            return (repeats.Count() > 0);
         }
 
         public void Decrypt(string key, string location)
