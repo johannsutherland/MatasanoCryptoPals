@@ -43,7 +43,7 @@ namespace ConverterTests
             }
             catch (ArgumentException ex)
             {
-
+                return;
             }
         }
 
@@ -60,7 +60,7 @@ namespace ConverterTests
             }
             catch (ArgumentException ex)
             {
-
+                return;
             }
         }
 
