@@ -14,6 +14,15 @@ namespace Matasano
         {
             Converter conv = new Converter();
 
+            string createdKey = PadKey(source, key);
+
+            string encrypted = conv.Xor(conv.StringToHex(source), conv.StringToHex(createdKey));
+
+            return encrypted;
+        }
+
+        private string PadKey(string source, string key)
+        {
             StringBuilder s = new StringBuilder();
             int pos = 0;
             while (pos < source.Length)
@@ -23,13 +32,10 @@ namespace Matasano
             }
 
             string createdKey = s.ToString().Substring(0, source.Length);
-
-            string encrypted = conv.Xor(conv.StringToHex(source), conv.StringToHex(createdKey));
-
-            return encrypted;
+            return createdKey;
         }
 
-        public Dictionary<char, string> Decrypt(string hexSource)
+        public Dictionary<char, string> TryDecrypt(string hexSource)
         {
             CharacterCounter cc = new CharacterCounter();
             Converter conv = new Converter();
@@ -47,19 +53,19 @@ namespace Matasano
             return result;
         }
 
-        public char DecryptAndFindKey(string hexSource)
+        public char TryDecryptAndFindKey(string hexSource)
         {
             CharacterCounter cc = new CharacterCounter();
-            return cc.FindKey(this.Decrypt(hexSource));
+            return cc.FindKey(this.TryDecrypt(hexSource));
         }
 
-        public string DecryptFile(string location)
+        public string TryDecryptFile(string location)
         {
             CharacterCounter cc = new CharacterCounter();
             string[] lines = File.ReadAllLines(location);
             foreach (string line in lines)
             {
-                var decrypted = this.Decrypt(line);
+                var decrypted = this.TryDecrypt(line);
                 char c = cc.FindKey(decrypted);
                 if (c != '\0')
                 {
@@ -88,50 +94,16 @@ namespace Matasano
             return transposed;
         }
 
-        public Dictionary<int, float> FindDistancePerKeySize(int startKeySize, int endKeySize, string source, int numberOfBlocks = 2)
-        {
-            if (numberOfBlocks % 2 != 0)
-            {
-                throw new ArgumentException("Number of blocks must be divisable by 2", "numberOfBlocks");
-            }
-
-            var result = new Dictionary<int, float>();
-
-            Converter cv = new Converter();
-            for (int keySize = startKeySize; keySize <= endKeySize; keySize++)
-            {
-                if (numberOfBlocks * keySize > source.Length)
-                {
-                    break;
-                }
-
-                string[] str = new string[numberOfBlocks];
-                for (int i = 0; i < numberOfBlocks; i++)
-                {
-                    str[i] = source.Substring(i * keySize, keySize);
-                }
-                
-                int totalDistance = 0;
-                for (int i = 0; i * 2 < str.Length; i++)
-                {
-                    totalDistance += cv.HammingDistance(str[2 * i], str[2 * i + 1]);
-                }
-
-                result.Add(keySize, ((float)totalDistance / (float)keySize));
-            }
-
-            return result;
-        }
-
         public string[] BreakXorFile(string location, int startKeySize = 2, int endKeySize = 60, int numberOfBlocks = 2)
         {
             int take = 10;
 
             CharacterCounter cc = new CharacterCounter();
             Converter conv = new Converter();
+            HammingDistance hd = new HammingDistance();
 
             string source = conv.Base64ToHex(String.Join("", File.ReadAllLines(location)));
-            var possibleKeySizes = this.FindDistancePerKeySize(startKeySize, endKeySize, source, numberOfBlocks).OrderBy(x => x.Value).Select(x => x.Key).Take(take);
+            var possibleKeySizes = hd.FindDistancePerKeySize(startKeySize, endKeySize, source, numberOfBlocks).OrderBy(x => x.Value).Select(x => x.Key).Take(take);
 
             foreach(var possibleKeySize in possibleKeySizes)
             {
@@ -144,7 +116,7 @@ namespace Matasano
 
                 foreach (var block in transposedBlocks)
                 {
-                    var decrypted = this.Decrypt(block);
+                    var decrypted = this.TryDecrypt(block);
                     var c = cc.FindKey(decrypted);
                     if (c == '\0')
                     {

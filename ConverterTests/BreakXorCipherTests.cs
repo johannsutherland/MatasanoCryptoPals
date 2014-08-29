@@ -9,46 +9,6 @@ namespace ConverterTests
     public class BreakXorCipherTests
     {
         [TestMethod]
-        public void FindDistancePerKeySize()
-        {
-            XorCipher xor = new XorCipher();
-            string source = "abcdefghabcdefgh";
-            int correctKeySize = 8;
-            int hammingDistance = 0;
-
-            var result = xor.FindDistancePerKeySize(2, 10, source);
-            Assert.AreEqual(result[correctKeySize], hammingDistance);
-        }
-
-        [TestMethod]
-        public void FindDistancePerKeySizeWith4BlockSize()
-        {
-            XorCipher xor = new XorCipher();
-            string source = "abcdefghabcdefghabcdefghabcdefgh";
-            int correctKeySize = 8;
-            int hammingDistance = 0;
-
-            var result = xor.FindDistancePerKeySize(2, 10, source, 4);
-            Assert.AreEqual(result[correctKeySize], hammingDistance);
-        }
-
-        [TestMethod]
-        public void FindDistancePerKeySizeWithInvalidBlockNumber()
-        {
-            XorCipher xor = new XorCipher();
-            try
-            {
-                string source = "abcdef";
-                var result = xor.FindDistancePerKeySize(2, 10, source, 3);
-                Assert.Fail();
-            }
-            catch (ArgumentException ex)
-            {
-
-            }
-        }
-
-        [TestMethod]
         public void Transpose3x4Blocks()
         {
             string source = "abcdabcdabcd";

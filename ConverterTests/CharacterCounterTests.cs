@@ -34,7 +34,7 @@ namespace ConverterTests
             string source = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
             string expected = "Cooking MC's like a pound of bacon";
             char expectedChar = 'X';
-            var result = cipher.Decrypt(source);
+            var result = cipher.TryDecrypt(source);
             Assert.AreEqual(expected, result[expectedChar]);
         }
 
@@ -44,7 +44,7 @@ namespace ConverterTests
             XorCipher cipher = new XorCipher();
             string source = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
             char expected = 'X';
-            var key = cipher.DecryptAndFindKey(source);
+            var key = cipher.TryDecryptAndFindKey(source);
             Assert.AreEqual(expected, key);
         }
 
@@ -53,7 +53,7 @@ namespace ConverterTests
         {
             string expected = "Now that the party is jumping" + (char)10;
             XorCipher cipher = new XorCipher();
-            string result = cipher.DecryptFile("encrypted.txt");
+            string result = cipher.TryDecryptFile("encrypted.txt");
             Assert.AreEqual(expected, result);
         }
 
@@ -67,33 +67,6 @@ namespace ConverterTests
             string result = cipher.Encrypt(source, key);
 
             Assert.AreEqual(expected, result);
-        }
-
-        [TestMethod]
-        public void HammingDistanceOfInequalString()
-        {
-            Converter conv = new Converter();
-            string str1 = "1";
-            string str2 = "12";
-            try
-            {
-                conv.HammingDistance(str1, str2);
-                Assert.Fail();
-            }
-            catch (ArgumentException ex)
-            {
-                
-            }
-        }
-      
-        [TestMethod]
-        public void HammingDistance()
-        {
-            Converter conv = new Converter();
-            string str1 = "this is a test";
-            string str2 = "wokka wokka!!!";
-            int distance = 37;
-            Assert.AreEqual(distance, conv.HammingDistance(str1, str2));
         }
     }
 }
