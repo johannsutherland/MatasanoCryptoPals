@@ -46,6 +46,25 @@ namespace Matasano
             return result;
         }
 
+        public string[] CreateAndTransposeBlocks(string source, int keySize)
+        {
+            string[] blocks = source.SplitByLength(keySize).ToArray();
+            string[] transposed = new string[keySize / 2];
+
+            for (int i = 0; i < transposed.Length; i++)
+            {
+                foreach (string block in blocks)
+                {
+                    if (2 * i + 1 < block.Length)
+                    {
+                        transposed[i] += block[2 * i].ToString() + block[2 * i + 1].ToString();
+                    }
+                }
+            }
+
+            return transposed;
+        }
+
         public char FindKey(Dictionary<char, string> decrypted)
         {
             var result = new Dictionary<char, float>();
