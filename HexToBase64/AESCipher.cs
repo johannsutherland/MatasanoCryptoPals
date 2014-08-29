@@ -21,6 +21,19 @@ namespace Matasano
             return (repeats.Count() > 0);
         }
 
+        public string PadKey(string key, int length)
+        {
+            if (key.Length >= length)
+            {
+                return key;
+            }
+            else
+            {
+                int paddingLength = length - key.Length;
+                return key + new String((char)(paddingLength), paddingLength);
+            }
+        }
+
         public void Decrypt(string key, string location)
         {
             Converter conv = new Converter();

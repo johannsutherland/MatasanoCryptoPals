@@ -33,5 +33,16 @@ namespace ConverterTests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void PadKey()
+        {
+            AESCipher aes = new AESCipher();
+            string key = "YELLOW SUBMARINE";
+            string expected = "YELLOW SUBMARINE\x04\x04\x04\x04";
+            string actual = aes.PadKey(key, 20);
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
