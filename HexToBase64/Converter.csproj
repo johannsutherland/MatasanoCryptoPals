@@ -52,6 +52,9 @@
     <Content Include="AES.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="AESinECBdetection.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Xor.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
