@@ -9,11 +9,25 @@ namespace ConverterTests
     public class AESTests
     {
         [TestMethod]
+        public void EncryptAES()
+        {
+            string expected = String.Join("", File.ReadAllLines("AES.txt"));
+            string data = File.ReadAllText("AESDecrypted.txt");
+
+            AESCipher aes = new AESCipher();
+            int lengthWithoutPadding = 3813;
+            string result = aes.Encrypt("YELLOW SUBMARINE", data);
+            Assert.AreEqual(expected.Substring(0, lengthWithoutPadding), result.Substring(0, lengthWithoutPadding));
+        }
+
+        [TestMethod]
         public void DecryptAES()
         {
-            AESCipher aes = new AESCipher();
             string expected = File.ReadAllText("AESDecrypted.txt");
-            string result = aes.Decrypt("YELLOW SUBMARINE", "AES.txt");
+            string data = File.ReadAllText("AES.txt");
+
+            AESCipher aes = new AESCipher();
+            string result = aes.Decrypt("YELLOW SUBMARINE", data);
             Assert.AreEqual(expected, result);
         }
 
