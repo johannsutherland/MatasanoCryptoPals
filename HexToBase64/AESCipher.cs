@@ -45,32 +45,16 @@ namespace Matasano
             {
                 Key = convertedKey,
                 Mode = CipherMode.ECB,
-                Padding = PaddingMode.None,
                 BlockSize = blockSize
             };
             ICryptoTransform decrypter = aesAlg.CreateDecryptor();
 
             byte[] message = conv.HexToBytes(conv.Base64ToHex(String.Join("", File.ReadAllLines(location))));
             StringBuilder decoded = new StringBuilder();
-            byte[] outputBuffer = new byte[blockSize];
+            byte[] outputBuffer = new byte[message.Length];
 
-            for (int pos = 0; pos < message.Length / blockSize; pos ++)
-            {
-                byte[] inputBuffer;
-
-                if (pos * blockSize > message.Length)
-                {
-                    inputBuffer = message.Skip(pos * blockSize).ToArray();
-                    outputBuffer = decrypter.TransformFinalBlock(inputBuffer, 0, message.Length - pos * blockSize);
-                }
-                else
-                {
-                    inputBuffer = message.Skip(pos * blockSize).Take(blockSize).ToArray();
-                    decrypter.TransformBlock(inputBuffer, 0, blockSize, outputBuffer, 0);
-                }
-
-                decoded.Append(conv.HexToString(conv.BytesToHex(outputBuffer)));
-            }
+            decrypter.TransformBlock(message, 0, message.Length, outputBuffer, 0);
+            decoded.Append(conv.HexToString(conv.BytesToHex(outputBuffer)));
 
             decoded.ToString();
         }
