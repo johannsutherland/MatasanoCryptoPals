@@ -34,7 +34,7 @@ namespace ConverterTests
         {
             string expected = "Now that the party is jumping" + (char)10;
             XorCipher cipher = new XorCipher();
-            string result = cipher.TryDecryptFile("encrypted.txt");
+            string result = cipher.TryDecryptFile(@"TestFiles\XorEncrypted.txt");
             Assert.AreEqual(expected, result);
         }
 
