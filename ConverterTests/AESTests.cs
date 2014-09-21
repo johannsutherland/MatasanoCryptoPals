@@ -12,7 +12,9 @@ namespace ConverterTests
         public void DecryptAES()
         {
             AESCipher aes = new AESCipher();
-            aes.Decrypt("YELLOW SUBMARINE", "AES.txt");
+            string expected = File.ReadAllText("AESDecrypted.txt");
+            string result = aes.Decrypt("YELLOW SUBMARINE", "AES.txt");
+            Assert.AreEqual(expected, result);
         }
 
         [TestMethod]

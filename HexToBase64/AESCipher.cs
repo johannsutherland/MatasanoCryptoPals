@@ -34,7 +34,7 @@ namespace Matasano
             }
         }
 
-        public void Decrypt(string key, string location)
+        public string Decrypt(string key, string location)
         {
             Converter conv = new Converter();
 
@@ -56,7 +56,7 @@ namespace Matasano
             decrypter.TransformBlock(message, 0, message.Length, outputBuffer, 0);
             decoded.Append(conv.HexToString(conv.BytesToHex(outputBuffer)));
 
-            decoded.ToString();
+            return decoded.ToString().Trim('\0');
         }
     }
 }
