@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AESCipher.cs" />
+    <Compile Include="AESCipherHelper.cs" />
     <Compile Include="Base64.cs" />
     <Compile Include="Bytes.cs" />
     <Compile Include="CharacterCounter.cs" />

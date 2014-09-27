@@ -11,44 +11,12 @@ namespace Matasano
     public class AESCipher
     {
         private int blockSize;
+        private AESCipherHelper helper;
 
         public AESCipher(int blockSize = 128)
         {
             this.blockSize = blockSize;
-        }
-
-        public bool IsECB(string line)
-        {
-            var blocks = line.SplitByLength(blockSize);
-            var groups = blocks.GroupBy(x => x);
-            var repeats = groups.Where(x => x.Count() > 1);
-
-            return (repeats.Count() > 0);
-        }
-
-        public string AddPadding(string data)
-        {
-            if (data.Length % blockSize == 0)
-            {
-                return data;
-            }
-            else
-            {
-                int paddingLength = blockSize - (data.Length % blockSize);
-                return data + new String((char)(paddingLength), paddingLength);
-            }
-        }
-
-        public string RemovePadding(string data)
-        {
-            string cleanedData = data.Trim('\0');
-            char c = cleanedData[cleanedData.Length - 1];
-            int padding = (int)c;
-
-            if (data.Substring(data.Length - padding).All(x => x == c || x == '\0'))
-                return cleanedData.Substring(0, data.Length - padding);
-            else
-                return cleanedData;
+            helper = new AESCipherHelper(blockSize);
         }
 
         private Bytes DecryptToBytes(string key, Hex data)
@@ -87,12 +55,12 @@ namespace Matasano
 
             string decoded = outputBuffer.ToString();
 
-            return RemovePadding(decoded);
+            return helper.RemovePadding(decoded);
         }
 
         public string DecryptCBC(string key, Hex data, string iv)
         {
-            byte[] convertedIV = new Bytes(AddPadding(iv)).ToArray();
+            byte[] convertedIV = new Bytes(helper.AddPadding(iv)).ToArray();
 
             byte[] message = data.ToBytes().ToArray();
             byte[] xor = new byte[message.Length];
@@ -120,7 +88,7 @@ namespace Matasano
             };
             ICryptoTransform encryptor = aesAlg.CreateEncryptor();
 
-            string paddedData = AddPadding(data);
+            string paddedData = helper.AddPadding(data);
             byte[] message = new Bytes(paddedData).ToArray();
             byte[] outputBuffer = new byte[message.Length];
 
