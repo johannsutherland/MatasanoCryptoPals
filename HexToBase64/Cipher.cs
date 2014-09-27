@@ -8,7 +8,7 @@ namespace Matasano
 {
     public abstract class Cipher
     {
-        public abstract string Decrypt(string hexSource, string key);
+        public abstract string Decrypt(Hex source, string key);
         public abstract string Encrypt(string source, string key);
 
         private readonly CharacterCounter characterCounter;
@@ -18,14 +18,14 @@ namespace Matasano
             characterCounter = new CharacterCounter();
         }
 
-        public Dictionary<char, string> TryDecrypt(string hexSource)
+        public Dictionary<char, string> TryDecrypt(Hex source)
         {
             var result = new Dictionary<char, string>();
 
             foreach (char c in characterCounter.GetAlphabet())
             {
-                string s = new string(c, hexSource.Length / 2);
-                string decrypted = this.Decrypt(hexSource, s);
+                string s = new string(c, source.Length);
+                string decrypted = this.Decrypt(source, s);
 
                 result.Add(c, decrypted);
             }
@@ -33,9 +33,9 @@ namespace Matasano
             return result;
         }
 
-        public char TryDecryptAndFindKey(string hexSource)
+        public char TryDecryptAndFindKey(Hex source)
         {
-            return characterCounter.FindKey(this.TryDecrypt(hexSource));
+            return characterCounter.FindKey(this.TryDecrypt(source));
         }
 
         public string TryDecryptFile(string location)
@@ -43,7 +43,7 @@ namespace Matasano
             string[] lines = File.ReadAllLines(location);
             foreach (string line in lines)
             {
-                var decrypted = this.TryDecrypt(line);
+                var decrypted = this.TryDecrypt(new Hex(line));
                 char c = characterCounter.FindKey(decrypted);
                 if (c != '\0')
                 {

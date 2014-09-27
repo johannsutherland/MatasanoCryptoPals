@@ -30,27 +30,25 @@ namespace ConverterTests
         [TestMethod]
         public void Transpose3x4Blocks()
         {
-            string source = "abcdabcdabcd";
+            Hex source = new Hex("abcdabcdabcd");
             int keySize = 4;
-            string[] transposed = { "ababab", "cdcdcd" };
+            Hex[] transposed = { new Hex("ababab"), new Hex("cdcdcd") };
 
-            CharacterCounter cc = new CharacterCounter();
-
-            string[] result = cc.CreateAndTransposeBlocks(source, keySize);
-            Assert.AreEqual(String.Join(",", transposed), String.Join(",", result));
+            Hex[] result = source.CreateAndTransposeBlocks(keySize);
+            Assert.AreEqual(String.Join<Hex>(",", transposed), String.Join<Hex>(",", result));
         }
 
         [TestMethod]
         public void Transpose10x5Blocks()
         {
-            string source = "0a0b0c0d0e0a0b0c0d0e0a0b0c0d0e0a0b0c0d0e0102030405";
+            Hex source = new Hex("0a0b0c0d0e0a0b0c0d0e0a0b0c0d0e0a0b0c0d0e0102030405");
             int keySize = 10;
-            string[] transposed = { "0a0a0a0a01", "0b0b0b0b02", "0c0c0c0c03", "0d0d0d0d04", "0e0e0e0e05" };
+            Hex[] transposed = { new Hex("0a0a0a0a01"), new Hex("0b0b0b0b02"), new Hex("0c0c0c0c03"), new Hex("0d0d0d0d04"), new Hex("0e0e0e0e05") };
 
             CharacterCounter cc = new CharacterCounter();
 
-            string[] result = cc.CreateAndTransposeBlocks(source, keySize);
-            Assert.AreEqual(String.Join(",", transposed), String.Join(",", result));
+            Hex[] result = source.CreateAndTransposeBlocks(keySize);
+            Assert.AreEqual(String.Join<Hex>(",", transposed), String.Join<Hex>(",", result));
         }
     }
 }

@@ -10,20 +10,13 @@ namespace Matasano
 {
     public class XorCipher : Cipher
     {
-        private readonly Converter converter;
-
-        public XorCipher()
-        {
-            converter = new Converter();
-        }
-
         public override string Encrypt(string source, string key)
         {
             string createdKey = PadKey(source, key);
 
-            string encrypted = converter.Xor(converter.StringToHex(source), converter.StringToHex(createdKey));
+            Hex encrypted = new Hex(source, Hex.InputFormat.String).Xor(new Hex(createdKey, Hex.InputFormat.String));
 
-            return encrypted;
+            return encrypted.ToString();
         }
 
         private string PadKey(string source, string key)
@@ -40,9 +33,10 @@ namespace Matasano
             return createdKey;
         }
 
-        public override string Decrypt(string hexSource, string key)
+        public override string Decrypt(Hex source, string key)
         {
-            return converter.HexToString(converter.Xor(hexSource, converter.StringToHex(key)));
+            Hex decrypted = source.Xor(new Hex(key, Hex.InputFormat.String));
+            return decrypted.ToString();
         }
     }
 }

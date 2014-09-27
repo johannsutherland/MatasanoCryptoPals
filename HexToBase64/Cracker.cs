@@ -10,30 +10,28 @@ namespace Matasano
     public class Cracker
     {
         private readonly Cipher cipher;
-        private readonly Converter converter;
         private readonly CharacterCounter characterCounter;
         private readonly HammingDistance hammingDistance;
 
         public Cracker(Cipher cipher)
         {
             this.cipher = cipher;
-            this.converter = new Converter();
             this.characterCounter = new CharacterCounter();
             this.hammingDistance = new HammingDistance();
         }
 
-        public string[] BreakXorFile(string location, int startKeySize = 2, int endKeySize = 60, int numberOfBlocks = 2)
+        public string[] BreakXorFile(Base64 data, int startKeySize = 2, int endKeySize = 60, int numberOfBlocks = 2)
         {
             int take = 10;
 
-            string source = converter.Base64ToHex(String.Join("", File.ReadAllLines(location)));
-            var possibleKeySizes = hammingDistance.FindDistancePerKeySize(startKeySize, endKeySize, source, numberOfBlocks).OrderBy(x => x.Value).Select(x => x.Key).Take(take);
+            Hex source = data.ToHex();
+            var possibleKeySizes = hammingDistance.FindDistancePerKeySize(startKeySize, endKeySize, source.ToString(), numberOfBlocks).OrderBy(x => x.Value).Select(x => x.Key).Take(take);
 
             foreach (var possibleKeySize in possibleKeySizes)
             {
                 StringBuilder sb = new StringBuilder();
 
-                var transposedBlocks = characterCounter.CreateAndTransposeBlocks(source, possibleKeySize);
+                var transposedBlocks = source.CreateAndTransposeBlocks(possibleKeySize);
                 var decryptedBlocks = new List<string>();
 
                 bool foundOne = false;

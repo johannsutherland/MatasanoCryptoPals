@@ -10,13 +10,15 @@ namespace Matasano
 {
     public class AESCipher
     {
-        private Converter conv = new Converter();
-        private const int BlockSize = 128;
+        private int blockSize;
+
+        public AESCipher(int blockSize = 128)
+        {
+            this.blockSize = blockSize;
+        }
 
         public bool IsECB(string line)
         {
-            int blockSize = 16;
-
             var blocks = line.SplitByLength(blockSize);
             var groups = blocks.GroupBy(x => x);
             var repeats = groups.Where(x => x.Count() > 1);
@@ -24,7 +26,7 @@ namespace Matasano
             return (repeats.Count() > 0);
         }
 
-        public string PadKey(string data, int blockSize)
+        public string AddPadding(string data)
         {
             if (data.Length % blockSize == 0)
             {
@@ -49,10 +51,9 @@ namespace Matasano
                 return cleanedData;
         }
 
-        private byte[] DecryptToBytes(string key, string data)
+        private Bytes DecryptToBytes(string key, Hex data)
         {
-            byte[] convertedKey = conv.HexToBytes(conv.StringToHex(key));
-            int blockSize = 128;
+            byte[] convertedKey = new Bytes(key).ToArray();
 
             RijndaelManaged aesAlg = new RijndaelManaged
             {
@@ -62,46 +63,54 @@ namespace Matasano
             };
             ICryptoTransform decrypter = aesAlg.CreateDecryptor();
 
-            byte[] message = conv.HexToBytes(conv.Base64ToHex(data));
+            byte[] message = data.ToBytes().ToArray();
             byte[] outputBuffer = new byte[message.Length];
 
             decrypter.TransformBlock(message, 0, message.Length, outputBuffer, 0);
 
-            return outputBuffer;
+            return new Bytes(outputBuffer);
+        }
+
+        public string Decrypt(string key, Base64 data)
+        {
+            return this.Decrypt(key, data.ToHex());
         }
 
         public string Decrypt(string key, string data)
         {
-            byte[] outputBuffer = DecryptToBytes(key, data);
+            return this.Decrypt(key, new Hex(data, Hex.InputFormat.String));
+        }
 
-            string decoded = conv.HexToString(conv.BytesToHex(outputBuffer));
+        public string Decrypt(string key, Hex data)
+        {
+            Bytes outputBuffer = DecryptToBytes(key, data);
+
+            string decoded = outputBuffer.ToString();
 
             return RemovePadding(decoded);
         }
 
-        public string DecryptCBC(string key, string data, string iv)
+        public string DecryptCBC(string key, Hex data, string iv)
         {
-            byte[] convertedIV = conv.HexToBytes(conv.StringToHex(PadKey(iv, BlockSize)));
+            byte[] convertedIV = new Bytes(AddPadding(iv)).ToArray();
 
-            byte[] message = conv.HexToBytes(conv.Base64ToHex(data));
+            byte[] message = data.ToBytes().ToArray();
             byte[] xor = new byte[message.Length];
 
-            byte[] outputBuffer = DecryptToBytes(key, data);
-
             convertedIV.CopyTo(xor, 0);
-            message.Take(message.Length - BlockSize / 8).ToArray().CopyTo(xor, BlockSize / 8);
-            outputBuffer = DecryptToBytes(key, data);
+            message.Take(message.Length - blockSize / 8).ToArray().CopyTo(xor, blockSize / 8);
+
+            Bytes outputBuffer = DecryptToBytes(key, data);
             
-            int length = conv.HexToString(conv.BytesToHex(outputBuffer)).TrimEnd(new char[] { '\0' }).Length;
-            string decoded = conv.HexToString(conv.BytesToHex(conv.Xor(outputBuffer, xor)));
+            int length = outputBuffer.ToString().TrimEnd(new char[] { '\0' }).Length;
+            string decoded = outputBuffer.Xor(new Bytes(xor)).ToString();
 
             return decoded.Substring(0, length);
         }
 
-        public string Encrypt(string key, string data)
+        public Base64 Encrypt(string key, string data)
         {
-            byte[] convertedKey = conv.HexToBytes(conv.StringToHex(key));
-            int blockSize = 128;
+            byte[] convertedKey = new Bytes(key).ToArray();
 
             RijndaelManaged aesAlg = new RijndaelManaged
             {
@@ -111,13 +120,13 @@ namespace Matasano
             };
             ICryptoTransform encryptor = aesAlg.CreateEncryptor();
 
-            string paddedData = PadKey(data, blockSize);
-            byte[] message = conv.HexToBytes(conv.StringToHex(paddedData));
+            string paddedData = AddPadding(data);
+            byte[] message = new Bytes(paddedData).ToArray();
             byte[] outputBuffer = new byte[message.Length];
 
             encryptor.TransformBlock(message, 0, message.Length, outputBuffer, 0);
 
-            return conv.HexToBase64(conv.BytesToHex(outputBuffer)));
+            return new Bytes(outputBuffer).ToBase64();
         }
     }
 }
