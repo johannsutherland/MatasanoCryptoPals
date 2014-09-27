@@ -66,6 +66,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TestFiles\AESCBCEncrypted.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestFiles\AESEncrypted.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

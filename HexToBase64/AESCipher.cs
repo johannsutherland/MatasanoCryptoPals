@@ -10,6 +10,9 @@ namespace Matasano
 {
     public class AESCipher
     {
+        private Converter conv = new Converter();
+        private const int BlockSize = 128;
+
         public bool IsECB(string line)
         {
             int blockSize = 16;
@@ -34,10 +37,20 @@ namespace Matasano
             }
         }
 
-        public string Decrypt(string key, string data)
+        public string RemovePadding(string data)
         {
-            Converter conv = new Converter();
+            string cleanedData = data.Trim('\0');
+            char c = cleanedData[cleanedData.Length - 1];
+            int padding = (int)c;
 
+            if (data.Substring(data.Length - padding).All(x => x == c || x == '\0'))
+                return cleanedData.Substring(0, data.Length - padding);
+            else
+                return cleanedData;
+        }
+
+        private byte[] DecryptToBytes(string key, string data)
+        {
             byte[] convertedKey = conv.HexToBytes(conv.StringToHex(key));
             int blockSize = 128;
 
@@ -50,19 +63,43 @@ namespace Matasano
             ICryptoTransform decrypter = aesAlg.CreateDecryptor();
 
             byte[] message = conv.HexToBytes(conv.Base64ToHex(data));
-            StringBuilder decoded = new StringBuilder();
             byte[] outputBuffer = new byte[message.Length];
 
             decrypter.TransformBlock(message, 0, message.Length, outputBuffer, 0);
-            decoded.Append(conv.HexToString(conv.BytesToHex(outputBuffer)));
 
-            return decoded.ToString().Trim('\0');
+            return outputBuffer;
+        }
+
+        public string Decrypt(string key, string data)
+        {
+            byte[] outputBuffer = DecryptToBytes(key, data);
+
+            string decoded = conv.HexToString(conv.BytesToHex(outputBuffer));
+
+            return RemovePadding(decoded);
+        }
+
+        public string DecryptCBC(string key, string data, string iv)
+        {
+            byte[] convertedIV = conv.HexToBytes(conv.StringToHex(PadKey(iv, BlockSize)));
+
+            byte[] message = conv.HexToBytes(conv.Base64ToHex(data));
+            byte[] xor = new byte[message.Length];
+
+            byte[] outputBuffer = DecryptToBytes(key, data);
+
+            convertedIV.CopyTo(xor, 0);
+            message.Take(message.Length - BlockSize / 8).ToArray().CopyTo(xor, BlockSize / 8);
+            outputBuffer = DecryptToBytes(key, data);
+            
+            int length = conv.HexToString(conv.BytesToHex(outputBuffer)).TrimEnd(new char[] { '\0' }).Length;
+            string decoded = conv.HexToString(conv.BytesToHex(conv.Xor(outputBuffer, xor)));
+
+            return decoded.Substring(0, length);
         }
 
         public string Encrypt(string key, string data)
         {
-            Converter conv = new Converter();
-
             byte[] convertedKey = conv.HexToBytes(conv.StringToHex(key));
             int blockSize = 128;
 
@@ -74,14 +111,13 @@ namespace Matasano
             };
             ICryptoTransform encryptor = aesAlg.CreateEncryptor();
 
-            byte[] message = conv.HexToBytes(conv.StringToHex(PadKey(data, blockSize)));
-            StringBuilder encoded = new StringBuilder();
+            string paddedData = PadKey(data, blockSize);
+            byte[] message = conv.HexToBytes(conv.StringToHex(paddedData));
             byte[] outputBuffer = new byte[message.Length];
 
             encryptor.TransformBlock(message, 0, message.Length, outputBuffer, 0);
-            encoded.Append(conv.HexToBase64(conv.BytesToHex(outputBuffer)));
 
-            return encoded.ToString();
+            return conv.HexToBase64(conv.BytesToHex(outputBuffer)));
         }
     }
 }

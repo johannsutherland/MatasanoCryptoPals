@@ -21,6 +21,19 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        public void EncryptAndDecryptAES()
+        {
+            string key = "YELLOW SUBMARINE";
+            string data = "this is the data";
+
+            AESCipher aes = new AESCipher();
+            string encrypted = aes.Encrypt(key, data);
+            string decrypted = aes.Decrypt(key, encrypted);
+
+            Assert.AreEqual(data, decrypted);
+        }
+
+        [TestMethod]
         public void DecryptAES()
         {
             string expected = File.ReadAllText(@"TestFiles\AESDecrypted.txt");
@@ -28,6 +41,18 @@ namespace ConverterTests
 
             AESCipher aes = new AESCipher();
             string result = aes.Decrypt("YELLOW SUBMARINE", data);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void DecryptAESCBC()
+        {
+            string expected = File.ReadAllText(@"TestFiles\AESDecrypted.txt");
+            string data = String.Join("", File.ReadAllLines(@"TestFiles\AESCBCEncrypted.txt"));
+            string iv = new string('\0', 128);
+
+            AESCipher aes = new AESCipher();
+            string result = aes.DecryptCBC("YELLOW SUBMARINE", data, iv);
             Assert.AreEqual(expected, result);
         }
 
