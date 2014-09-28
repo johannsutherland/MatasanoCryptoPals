@@ -11,11 +11,13 @@ namespace Matasano
     public class AESCipher
     {
         private int blockSize;
+        private int keySize;
         private AESCipherHelper helper;
 
-        public AESCipher(int blockSize = 128)
+        public AESCipher(int blockSize = 128, int keySize = 16)
         {
             this.blockSize = blockSize;
+            this.keySize = keySize;
             helper = new AESCipherHelper(blockSize);
         }
 
@@ -72,7 +74,7 @@ namespace Matasano
             byte[] xor = new byte[message.Length];
 
             convertedIV.CopyTo(xor, 0);
-            message.Take(message.Length - blockSize / 8).ToArray().CopyTo(xor, blockSize / 8);
+            message.Take(message.Length - keySize).ToArray().CopyTo(xor, keySize);
 
             Bytes outputBuffer = DecryptECBToBytes(key, data);
             
@@ -140,12 +142,10 @@ namespace Matasano
             Bytes encrypted = new Bytes(String.Empty);
             byte[] outputBuffer = iv.ToArray();
 
-            int messageSize = blockSize / 8;
-
-            for (int pos = 0; pos < message.Length / messageSize; pos++)
+            for (int pos = 0; pos < message.Length / keySize; pos++)
             {
-                Bytes inputBuffer = new Bytes(message.Skip(pos * messageSize).Take(messageSize).ToArray()).Xor(new Bytes(outputBuffer));
-                encryptor.TransformBlock(inputBuffer.ToArray(), 0, messageSize, outputBuffer, 0);
+                Bytes inputBuffer = new Bytes(message.Skip(pos * keySize).Take(keySize).ToArray()).Xor(new Bytes(outputBuffer));
+                encryptor.TransformBlock(inputBuffer.ToArray(), 0, keySize, outputBuffer, 0);
 
                 encrypted.Add(outputBuffer);
             }
