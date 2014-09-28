@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Matasano;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConverterTests
 {
@@ -144,7 +145,7 @@ namespace ConverterTests
             {
                 Random r = new Random();
                 Tuple<Base64, string> encrypted = eo.Encrypt(new String((char)r.Next(255), 100));
-                Assert.IsTrue((helper.IsECB(encrypted.Item1.ToHex().ToString()) && encrypted.Item2 == "EBC") || (encrypted.Item2 == "CBC"));
+                Assert.IsTrue((helper.IsECB(encrypted.Item1.Decode()) && encrypted.Item2 == "EBC") || (encrypted.Item2 == "CBC"));
             }
         }
     }

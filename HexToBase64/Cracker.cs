@@ -9,78 +9,101 @@ namespace Matasano
 {
     public class Cracker
     {
-        private readonly Cipher cipher;
-        private readonly CharacterCounter characterCounter;
         private readonly HammingDistance hammingDistance;
+        private readonly EncryptionOracle eo;
+        private readonly AESCipherHelper helper;
 
-        public Cracker(Cipher cipher)
+        private readonly Base64 unknownString;
+
+        public Cracker(Base64 unknownString)
         {
-            this.cipher = cipher;
-            this.characterCounter = new CharacterCounter();
             this.hammingDistance = new HammingDistance();
+            this.eo = new EncryptionOracle();
+            this.helper = new AESCipherHelper();
+            this.unknownString = unknownString;
         }
 
-        public string[] BreakXorFile(Base64 data, int startKeySize = 2, int endKeySize = 60, int numberOfBlocks = 2)
+        public string Break()
         {
-            int take = 10;
+            int blockSize = this.FindBlockSize();
 
-            Hex source = data.ToHex();
-            var possibleKeySizes = hammingDistance.FindDistancePerKeySize(startKeySize, endKeySize, source.ToString(), numberOfBlocks).OrderBy(x => x.Value).Select(x => x.Key).Take(take);
-
-            foreach (var possibleKeySize in possibleKeySizes)
+            if (!this.IsECB(blockSize))
             {
-                StringBuilder sb = new StringBuilder();
+                throw new Exception("Must be ECB");
+            }
 
-                var transposedBlocks = source.CreateAndTransposeBlocks(possibleKeySize);
-                var decryptedBlocks = new List<string>();
+            StringBuilder foundCharacters = new StringBuilder();
+            int blocksCompleted = 0;
+            int base64BlockSize = 170;
 
-                bool foundOne = false;
+            for (int i = 1; i < blockSize; i++)
+            {
+                string message = new String('A', blockSize - i);
+                var encrypted = new Dictionary<Base64, string>();
+                Base64 encryptedMessage = this.Encrypt(message);
 
-                foreach (var block in transposedBlocks)
+                for (int character = 0; character < 256; character++)
                 {
-                    var decrypted = cipher.TryDecrypt(block);
-                    var c = characterCounter.FindKey(decrypted);
-                    if (c == '\0')
+                    string updatedMessage = message + foundCharacters.ToString() + (char)character;
+                    Base64 updatedEncryptedMessage = this.Encrypt(updatedMessage);
+                    encrypted.Add(updatedEncryptedMessage, updatedMessage);
+
+                    if (updatedEncryptedMessage.ToString()
+                            .Substring(base64BlockSize * blocksCompleted, base64BlockSize * (blocksCompleted + 1)) 
+                        == encryptedMessage.ToString()
+                            .Substring(base64BlockSize * blocksCompleted, base64BlockSize * (blocksCompleted + 1)))
                     {
-                        if (foundOne)
+                        foundCharacters.Append((char)character);
+                        break;
+                    }
+                }
+            }
+
+            return foundCharacters.ToString();
+        }
+
+        public int FindBlockSize()
+        {
+            var aggregated = new Dictionary<int, float>();
+            int start = 1;
+            int end = 200;
+            int blocks = 2;
+
+            for (int i = 0; i < 100; i++)
+            {
+                Base64 encrypted = eo.EncryptConsistentKey(new String('A', i), unknownString);
+                HammingDistance hd = new HammingDistance();
+                var keys = hd.FindDistancePerKeySize(start, end, encrypted.ToString(), blocks).OrderBy(x => x.Value);
+                foreach (var kvp in keys)
+                {
+                    if (aggregated.ContainsKey(kvp.Key))
+                    {
+                        if (aggregated[kvp.Key] > kvp.Value)
                         {
-                            sb.Append('?');
-                            decryptedBlocks.Add(decrypted['A']);
-                        }
-                        else
-                        {
-                            break;
+                            aggregated[kvp.Key] = kvp.Value;
                         }
                     }
                     else
                     {
-                        foundOne = true;
-                        sb.Append(c);
-                        decryptedBlocks.Add(decrypted[c]);
+                        aggregated.Add(kvp.Key, kvp.Value);
                     }
-                }
-
-                string key = sb.ToString();
-
-                if (key.Length > 0)
-                {
-                    StringBuilder decrypted = new StringBuilder();
-                    for (int i = 0; i < decryptedBlocks[0].Length; i++)
-                    {
-                        foreach (string block in decryptedBlocks)
-                        {
-                            if (i < block.Length)
-                            {
-                                decrypted.Append(block[i]);
-                            }
-                        }
-                    }
-
-                    return new string[] { key, decrypted.ToString() };
                 }
             }
 
-            return new string[] { "", "" };
+            var possibleKey = aggregated.OrderBy(x => x.Value).Take(1).Single();
+
+            return possibleKey.Key * blocks;
+        }
+
+        public bool IsECB(int blockSize)
+        {
+            Base64 encrypted = eo.EncryptConsistentKey(new String('A', blockSize), unknownString);
+            return helper.IsECB(encrypted.Decode());
+        }
+
+        public Base64 Encrypt(string craftedBlock)
+        {
+            return eo.EncryptConsistentKey(craftedBlock, unknownString);
         }
     }
 }

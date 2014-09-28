@@ -10,6 +10,19 @@ namespace Matasano
     {
         Random random = new Random();
         AESCipher cipher = new AESCipher();
+        AESCipherHelper helper = new AESCipherHelper();
+        Bytes key;
+
+        public EncryptionOracle()
+        {
+            key = helper.GenerateKey();
+        }
+
+        public Base64 EncryptConsistentKey(string data, Base64 unknownString)
+        {
+            string plaintext = data + unknownString.Decode();
+            return cipher.EncryptECB(key.ToString(), plaintext);
+        }
 
         public Tuple<Base64, string> Encrypt(string data)
         {
@@ -23,11 +36,6 @@ namespace Matasano
             {
                 return new Tuple<Base64, string>(cipher.EncryptECB(plainText), "EBC");
             }
-        }
-
-        public Base64 EncryptConsistentKey(string data)
-        {
-            
         }
 
         private string PadData(string data)

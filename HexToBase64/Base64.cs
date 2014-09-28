@@ -22,6 +22,11 @@ namespace Matasano
             return new Bytes(Convert.FromBase64String(_data)).ToHex();
         }
 
+        public string Decode()
+        {
+            return new Bytes(Convert.FromBase64String(_data)).ToString();
+        }
+
         public override bool Equals(object obj)
         {
             return _data.Equals(obj.ToString());

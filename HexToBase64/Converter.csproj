@@ -52,6 +52,7 @@
     <Compile Include="Hex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XorCipher.cs" />
+    <Compile Include="XorCracker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Xor.txt">
