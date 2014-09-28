@@ -25,6 +25,11 @@ namespace Matasano
             }
         }
 
+        public Base64 EncryptConsistentKey(string data)
+        {
+            
+        }
+
         private string PadData(string data)
         {
             int startSize = 5 + random.Next(5);

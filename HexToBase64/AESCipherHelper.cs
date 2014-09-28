@@ -54,7 +54,7 @@ namespace Matasano
         public Bytes GenerateKey()
         {
             Random random = new Random();
-            byte[] key = new byte[16];
+            byte[] key = new byte[keySize];
             random.NextBytes(key);
             return new Bytes(key);
         }
