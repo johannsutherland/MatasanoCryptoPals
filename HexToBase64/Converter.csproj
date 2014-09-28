@@ -44,6 +44,7 @@
     <Compile Include="Base64.cs" />
     <Compile Include="Bytes.cs" />
     <Compile Include="CharacterCounter.cs" />
+    <Compile Include="EncryptionOracle.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="Cracker.cs" />
     <Compile Include="HammingDistance.cs" />

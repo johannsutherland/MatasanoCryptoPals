@@ -9,15 +9,17 @@ namespace Matasano
     public class AESCipherHelper
     {
         private int blockSize;
+        private int keySize;
 
-        public AESCipherHelper(int blockSize = 128)
+        public AESCipherHelper(int blockSize = 128, int keySize = 16)
         {
             this.blockSize = blockSize;
+            this.keySize = keySize;
         }
 
         public bool IsECB(string line)
         {
-            var blocks = line.SplitByLength(blockSize);
+            var blocks = line.SplitByLength(keySize);
             var groups = blocks.GroupBy(x => x);
             var repeats = groups.Where(x => x.Count() > 1);
 
@@ -49,5 +51,12 @@ namespace Matasano
                 return cleanedData;
         }
 
+        public Bytes GenerateKey()
+        {
+            Random random = new Random();
+            byte[] key = new byte[16];
+            random.NextBytes(key);
+            return new Bytes(key);
+        }
     }
 }

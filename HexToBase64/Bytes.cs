@@ -40,6 +40,15 @@ namespace Matasano
             return _data;
         }
 
+        public void Add(byte[] array)
+        {
+            byte[] newArray = new byte[_data.Length + array.Length];
+            _data.CopyTo(newArray, 0);
+            array.CopyTo(newArray, _data.Length);
+
+            _data = newArray;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

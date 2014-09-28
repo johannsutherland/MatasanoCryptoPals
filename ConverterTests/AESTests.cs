@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Matasano;
 using System.IO;
+using System.Collections.Generic;
 
 namespace ConverterTests
 {
@@ -9,13 +10,13 @@ namespace ConverterTests
     public class AESTests
     {
         [TestMethod]
-        public void EncryptAES()
+        public void EncryptECB()
         {
             Base64 expected = new Base64(new FileInfo(@"TestFiles\AESEncrypted.txt"));
             string data = File.ReadAllText(@"TestFiles\AESDecrypted.txt");
 
             AESCipher aes = new AESCipher();
-            Base64 result = aes.Encrypt("YELLOW SUBMARINE", data);
+            Base64 result = aes.EncryptECB("YELLOW SUBMARINE", data);
 
             int lengthWithoutPadding = 3813;
             Assert.AreEqual(expected.ToString().Substring(0, lengthWithoutPadding), 
@@ -23,31 +24,45 @@ namespace ConverterTests
         }
 
         [TestMethod]
-        public void EncryptAndDecryptAES()
+        public void EncryptAndDecryptECB()
         {
             string key = "YELLOW SUBMARINE";
             string data = "this is the data";
 
             AESCipher aes = new AESCipher();
-            Base64 encrypted = aes.Encrypt(key, data);
-            string decrypted = aes.Decrypt(key, encrypted);
+            Base64 encrypted = aes.EncryptECB(key, data);
+            string decrypted = aes.DecryptECB(key, encrypted);
 
             Assert.AreEqual(data, decrypted);
         }
 
         [TestMethod]
-        public void DecryptAES()
+        public void DecryptECB()
         {
             string expected = File.ReadAllText(@"TestFiles\AESDecrypted.txt");
             Base64 data = new Base64(new FileInfo(@"TestFiles\AESEncrypted.txt"));
 
             AESCipher aes = new AESCipher();
-            string result = aes.Decrypt("YELLOW SUBMARINE", data);
+            string result = aes.DecryptECB("YELLOW SUBMARINE", data);
             Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
-        public void DecryptAESCBC()
+        public void EncryptAndDecryptCBC()
+        {
+            string key = "YELLOW SUBMARINE";
+            string data = "this is the data";
+            string iv = new String('\0', 16);
+
+            AESCipher aes = new AESCipher();
+            Base64 encrypted = aes.EncryptCBC(key, data, iv);
+            string decrypted = aes.DecryptCBC(key, encrypted, iv);
+
+            Assert.AreEqual(data, decrypted);
+        }
+
+        [TestMethod]
+        public void DecryptCBC()
         {
             string expected = File.ReadAllText(@"TestFiles\AESDecrypted.txt");
             Base64 data = new Base64(new FileInfo(@"TestFiles\AESCBCEncrypted.txt"));
@@ -86,6 +101,51 @@ namespace ConverterTests
             string actual = helper.AddPadding(key);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void GenerateKeyWithCorrectLength()
+        {
+            int length = 16;
+            AESCipherHelper helper = new AESCipherHelper(length);
+            Bytes key = helper.GenerateKey();
+            Assert.IsTrue(key.ToHex().Length == length);
+        }
+
+        [TestMethod]
+        public void GenerateUniqueKeys()
+        {
+            AESCipherHelper helper = new AESCipherHelper(16);
+            List<Bytes> keys = new List<Bytes>();
+
+            while (keys.Count < 100)
+            {
+                Bytes key = helper.GenerateKey();
+                if (!keys.Contains(key))
+                {
+                    keys.Add(key);
+                }
+                else
+                {
+                    throw new Exception("Duplicate key");
+                }
+            }
+
+            Assert.IsTrue(keys.Count == 100);
+        }
+
+        [TestMethod]
+        public void Oracle()
+        {
+            EncryptionOracle eo = new EncryptionOracle();
+            AESCipherHelper helper = new AESCipherHelper();
+
+            for (int i = 0; i < 100; i++)
+            {
+                Random r = new Random();
+                Tuple<Base64, string> encrypted = eo.Encrypt(new String((char)r.Next(255), 100));
+                Assert.IsTrue((helper.IsECB(encrypted.Item1.ToHex().ToString()) && encrypted.Item2 == "EBC") || (encrypted.Item2 == "CBC"));
+            }
         }
     }
 }

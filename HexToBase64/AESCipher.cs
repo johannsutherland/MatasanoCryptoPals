@@ -19,7 +19,7 @@ namespace Matasano
             helper = new AESCipherHelper(blockSize);
         }
 
-        private Bytes DecryptToBytes(string key, Hex data)
+        private Bytes DecryptECBToBytes(string key, Hex data)
         {
             byte[] convertedKey = new Bytes(key).ToArray();
 
@@ -27,6 +27,7 @@ namespace Matasano
             {
                 Key = convertedKey,
                 Mode = CipherMode.ECB,
+                Padding = PaddingMode.None,
                 BlockSize = blockSize
             };
             ICryptoTransform decrypter = aesAlg.CreateDecryptor();
@@ -39,23 +40,28 @@ namespace Matasano
             return new Bytes(outputBuffer);
         }
 
-        public string Decrypt(string key, Base64 data)
+        public string DecryptECB(string key, Base64 data)
         {
-            return this.Decrypt(key, data.ToHex());
+            return this.DecryptECB(key, data.ToHex());
         }
 
-        public string Decrypt(string key, string data)
+        public string DecryptECB(string key, string data)
         {
-            return this.Decrypt(key, new Hex(data, Hex.InputFormat.String));
+            return this.DecryptECB(key, new Hex(data, Hex.InputFormat.String));
         }
 
-        public string Decrypt(string key, Hex data)
+        public string DecryptECB(string key, Hex data)
         {
-            Bytes outputBuffer = DecryptToBytes(key, data);
+            Bytes outputBuffer = DecryptECBToBytes(key, data);
 
             string decoded = outputBuffer.ToString();
 
             return helper.RemovePadding(decoded);
+        }
+
+        public string DecryptCBC(string key, Base64 data, string iv)
+        {
+            return this.DecryptCBC(key, data.ToHex(), iv);
         }
 
         public string DecryptCBC(string key, Hex data, string iv)
@@ -68,22 +74,31 @@ namespace Matasano
             convertedIV.CopyTo(xor, 0);
             message.Take(message.Length - blockSize / 8).ToArray().CopyTo(xor, blockSize / 8);
 
-            Bytes outputBuffer = DecryptToBytes(key, data);
+            Bytes outputBuffer = DecryptECBToBytes(key, data);
             
-            int length = outputBuffer.ToString().TrimEnd(new char[] { '\0' }).Length;
             string decoded = outputBuffer.Xor(new Bytes(xor)).ToString();
 
-            return decoded.Substring(0, length);
+            return helper.RemovePadding(decoded);
         }
 
-        public Base64 Encrypt(string key, string data)
+        public Base64 EncryptECB(string data)
         {
-            byte[] convertedKey = new Bytes(key).ToArray();
+            Bytes key = helper.GenerateKey();
+            return this.EncryptECB(key, data);
+        }
 
+        public Base64 EncryptECB(string key, string data)
+        {
+            return this.EncryptECB(new Bytes(key), data);
+        }
+
+        private Base64 EncryptECB(Bytes key, string data)
+        {
             RijndaelManaged aesAlg = new RijndaelManaged
             {
-                Key = convertedKey,
+                Key = key.ToArray(),
                 Mode = CipherMode.ECB,
+                Padding = PaddingMode.None,
                 BlockSize = blockSize
             };
             ICryptoTransform encryptor = aesAlg.CreateEncryptor();
@@ -95,6 +110,47 @@ namespace Matasano
             encryptor.TransformBlock(message, 0, message.Length, outputBuffer, 0);
 
             return new Bytes(outputBuffer).ToBase64();
+        }
+
+        public Base64 EncryptCBC(string data)
+        {
+            Bytes key = helper.GenerateKey();
+            Bytes iv = new Bytes(new String('\0', 16));
+            return this.EncryptCBC(key, data, iv);
+        }
+
+        public Base64 EncryptCBC(string key, string data, string iv)
+        {
+            return this.EncryptCBC(new Bytes(key), data, new Bytes(iv));
+        }
+
+        public Base64 EncryptCBC(Bytes key, string data, Bytes iv)
+        {
+            RijndaelManaged aesAlg = new RijndaelManaged
+            {
+                Key = key.ToArray(),
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.None,
+                BlockSize = blockSize
+            };
+            ICryptoTransform encryptor = aesAlg.CreateEncryptor();
+
+            string paddedData = helper.AddPadding(data);
+            byte[] message = new Bytes(paddedData).ToArray();
+            Bytes encrypted = new Bytes(String.Empty);
+            byte[] outputBuffer = iv.ToArray();
+
+            int messageSize = blockSize / 8;
+
+            for (int pos = 0; pos < message.Length / messageSize; pos++)
+            {
+                Bytes inputBuffer = new Bytes(message.Skip(pos * messageSize).Take(messageSize).ToArray()).Xor(new Bytes(outputBuffer));
+                encryptor.TransformBlock(inputBuffer.ToArray(), 0, messageSize, outputBuffer, 0);
+
+                encrypted.Add(outputBuffer);
+            }
+
+            return encrypted.ToBase64();
         }
     }
 }
