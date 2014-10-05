@@ -9,6 +9,7 @@ namespace ConverterTests
     public class XorCrackerTests
     {
         [TestMethod]
+        [TestCategory("Set 1 - Challenge 06")]
         public void BreakXorFile()
         {
             XorCracker cracker = new XorCracker();

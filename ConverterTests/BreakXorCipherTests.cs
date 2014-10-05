@@ -20,6 +20,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 1 - Challenge 03")]
         public void DecryptAndFindKey()
         {
             XorCipher cipher = new XorCipher();
@@ -30,6 +31,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 1 - Challenge 04")]
         public void DecryptFile()
         {
             string expected = "Now that the party is jumping" + (char)10;
@@ -39,6 +41,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 1 - Challenge 05")]
         public void EncryptLine()
         {
             XorCipher cipher = new XorCipher();

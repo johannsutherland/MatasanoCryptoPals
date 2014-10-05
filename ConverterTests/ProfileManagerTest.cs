@@ -56,6 +56,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 2 - Challenge 13")]
         public void BreakProfileManager()
         {
             ProfileManager profileManger = new ProfileManager();

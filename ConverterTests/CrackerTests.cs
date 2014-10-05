@@ -22,6 +22,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 2 - Challenge 11")]
         public void DetectEncryption()
         {
             Cracker cracker = new Cracker(unknownString);
@@ -29,6 +30,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 2 - Challenge 12")]
         public void BreakMessage()
         {
             string expected = "Rollin' in my 5.0\nWith my rag-top down so my hair can blow\nThe girlies on standby waving just to say hi\nDid you stop? No, I just drove by\n";

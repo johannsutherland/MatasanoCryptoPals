@@ -42,6 +42,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 1 - Challenge 07")]
         public void DecryptECB()
         {
             string expected = File.ReadAllText(@"TestFiles\AESDecrypted.txt");
@@ -72,6 +73,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 2 - Challenge 10")]
         public void DecryptCBC()
         {
             string expected = File.ReadAllText(@"TestFiles\AESDecrypted.txt");
@@ -84,6 +86,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 1 - Challenge 08")]
         public void DetectECB()
         {
             AESCipherHelper helper = new AESCipherHelper(blockSize);
@@ -103,6 +106,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 2 - Challenge 09")]
         public void PadKey()
         {
             AESCipherHelper helper = new AESCipherHelper(20);
