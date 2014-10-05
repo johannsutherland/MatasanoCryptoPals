@@ -83,11 +83,11 @@ namespace Matasano
         public int FindBlockSize()
         {
             var aggregated = new Dictionary<int, float>();
-            int start = 1;
-            int end = 60;
+            int start = 10;
+            int end = 32;
             int blocks = 4;
 
-            for (int i = 1; i < 200; i++)
+            for (int i = start; i < end * 3; i++)
             {
                 Base64 encrypted = eo.EncryptConsistentKey(new String('A', i), unknownString);
                 HammingDistance hd = new HammingDistance();
