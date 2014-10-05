@@ -25,7 +25,7 @@ namespace Matasano
             var userRole = profileManager.Encrypted(userEmail);
 
             // Get email=fo@bar.comadmin            &uid=10&role=user
-            string adminBlockEmail = "fo@bar.comadmin" + new string('\0', 12);
+            string adminBlockEmail = "fo@bar.comadmin" + new string((char)11, 12);
             profileManager.AddProfile(adminBlockEmail);
             var adminBlock = profileManager.Encrypted(adminBlockEmail);
 
