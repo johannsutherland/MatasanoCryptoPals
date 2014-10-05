@@ -118,6 +118,56 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 2 - Challenge 15")]
+        public void UnPadKey()
+        {
+            AESCipherHelper helper = new AESCipherHelper(20);
+            string key = "YELLOW SUBMARINE\x04\x04\x04\x04";
+            string expected = "YELLOW SUBMARINE";
+            string actual = helper.RemovePadding(key);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [TestCategory("Set 2 - Challenge 15")]
+        public void UnPadInvalidKeys1()
+        {
+            AESCipherHelper helper = new AESCipherHelper(20);
+            string key = "YELLOW SUBMARINE\x05\x05\x05\x05";
+            string expected = "Invalid Padding";
+
+            try
+            {
+                string actual = helper.RemovePadding(key);
+                Assert.Fail("Exception not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("Set 2 - Challenge 15")]
+        public void UnPadInvalidKeys2()
+        {
+            AESCipherHelper helper = new AESCipherHelper(20);
+            string key = "YELLOW SUBMARINE\x01\x02\x03\x04";
+            string expected = "Invalid Padding";
+
+            try
+            {
+                string actual = helper.RemovePadding(key);
+                Assert.Fail("Exception not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+
+        [TestMethod]
         public void GenerateKeyWithCorrectLength()
         {
             AESCipherHelper helper = new AESCipherHelper(blockSize);

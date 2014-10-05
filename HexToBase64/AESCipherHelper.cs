@@ -41,17 +41,24 @@ namespace Matasano
 
         public string RemovePadding(string data)
         {
-            string cleanedData = data.Trim('\0');
-            char c = cleanedData[cleanedData.Length - 1];
+            char c = data[data.Length - 1];
             int padding = (int)c;
 
-            if ((data.Length - padding > 0) && (data.Substring(data.Length - padding).All(x => x == c || x == '\0')))
+            if (padding < blockSize)
             {
-                return cleanedData.Substring(0, data.Length - padding);
+                for (int i = data.Length - 1; i >= data.Length - padding; i--)
+                {
+                    if (data[i] != c)
+                    {
+                        throw new Exception("Invalid Padding");
+                    }
+                }
+
+                return data.Substring(0, data.Length - padding);
             }
             else
             {
-                return cleanedData;
+                return data;
             }
         }
 
