@@ -21,9 +21,7 @@ namespace ConverterTests
             AESCipher aes = new AESCipher();
             Base64 result = aes.EncryptECB("YELLOW SUBMARINE", data);
 
-            int lengthWithoutPadding = 3813;
-            Assert.AreEqual(expected.ToString().Substring(0, lengthWithoutPadding), 
-                result.ToString().Substring(0, lengthWithoutPadding));
+            Assert.AreEqual(expected.ToString(), result.ToString());
         }
 
         [TestMethod]
