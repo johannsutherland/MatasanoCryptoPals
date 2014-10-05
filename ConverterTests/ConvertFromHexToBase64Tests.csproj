@@ -57,6 +57,7 @@
     <Compile Include="AESTests.cs" />
     <Compile Include="HammingDistanceTests.cs" />
     <Compile Include="CrackerTests.cs" />
+    <Compile Include="ProfileManagerTest.cs" />
     <Compile Include="XorCrackerTests.cs" />
     <Compile Include="XorTests.cs" />
   </ItemGroup>
