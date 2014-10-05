@@ -35,7 +35,6 @@ namespace Matasano
             char[] foundCharacters = new char[blockSize];
             char[] completed = new char[unknownString.Decode().Length];
             int completedBlocks = 0;
-            int lastPos = 0;
 
             while (true)
             {
@@ -62,20 +61,12 @@ namespace Matasano
 
                     if (!found)
                     {
-                        lastPos = pos - 1;
-                        break;
+                        foundCharacters.Take(pos - 1).ToArray().CopyTo(completed, completedBlocks * blockSize);
+                        return new String(completed);
                     }
                 }
 
-                if (foundCharacters.Length + (completedBlocks * blockSize) > completed.Length)
-                {
-                    foundCharacters.Take(lastPos).ToArray().CopyTo(completed, completedBlocks * blockSize);
-                    return new String(completed);
-                }
-                else
-                {
-                    foundCharacters.ToArray().CopyTo(completed, completedBlocks * blockSize);
-                }
+                foundCharacters.ToArray().CopyTo(completed, completedBlocks * blockSize);
                 completedBlocks++;
             }
         }
