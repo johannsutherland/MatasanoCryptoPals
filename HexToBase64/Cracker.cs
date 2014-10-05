@@ -32,56 +32,71 @@ namespace Matasano
                 throw new Exception("Must be ECB");
             }
 
-            StringBuilder foundCharacters = new StringBuilder();
-            int blocksCompleted = 0;
-            int base64BlockSize = 170;
+            char[] foundCharacters = new char[blockSize];
+            char[] completed = new char[unknownString.Decode().Length];
+            int completedBlocks = 0;
+            int lastPos = 0;
 
-            for (int i = 1; i < blockSize; i++)
+            while (true)
             {
-                string message = new String('A', blockSize - i);
-                var encrypted = new Dictionary<Base64, string>();
-                Base64 encryptedMessage = this.Encrypt(message);
-
-                for (int character = 0; character < 256; character++)
+                for (int pos = 0; pos < blockSize; pos++)
                 {
-                    string updatedMessage = message + foundCharacters.ToString() + (char)character;
-                    Base64 updatedEncryptedMessage = this.Encrypt(updatedMessage);
-                    encrypted.Add(updatedEncryptedMessage, updatedMessage);
+                    string message = new String('A', blockSize - pos - 1);
+                    Base64 encryptedMessage = this.Encrypt(message, completedBlocks * blockSize);
 
-                    if (updatedEncryptedMessage.ToString()
-                            .Substring(base64BlockSize * blocksCompleted, base64BlockSize * (blocksCompleted + 1)) 
-                        == encryptedMessage.ToString()
-                            .Substring(base64BlockSize * blocksCompleted, base64BlockSize * (blocksCompleted + 1)))
+                    bool found = false;
+
+                    for (int character = 0; character < 256; character++)
                     {
-                        foundCharacters.Append((char)character);
+                        string updatedMessage = message + String.Join("", foundCharacters.Take(pos)) + (char)character;
+                        Base64 updatedEncryptedMessage = this.Encrypt(updatedMessage, completedBlocks * blockSize);
+
+                        if (updatedEncryptedMessage.Decode().Substring(0, blockSize) ==
+                            encryptedMessage.Decode().Substring(0, blockSize))
+                        {
+                            foundCharacters[pos] = (char)character;
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        lastPos = pos - 1;
                         break;
                     }
                 }
-            }
 
-            return foundCharacters.ToString();
+                if (foundCharacters.Length + (completedBlocks * blockSize) > completed.Length)
+                {
+                    foundCharacters.Take(lastPos).ToArray().CopyTo(completed, completedBlocks * blockSize);
+                    return new String(completed);
+                }
+                else
+                {
+                    foundCharacters.ToArray().CopyTo(completed, completedBlocks * blockSize);
+                }
+                completedBlocks++;
+            }
         }
 
         public int FindBlockSize()
         {
             var aggregated = new Dictionary<int, float>();
             int start = 1;
-            int end = 200;
-            int blocks = 2;
+            int end = 60;
+            int blocks = 4;
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 1; i < 200; i++)
             {
                 Base64 encrypted = eo.EncryptConsistentKey(new String('A', i), unknownString);
                 HammingDistance hd = new HammingDistance();
-                var keys = hd.FindDistancePerKeySize(start, end, encrypted.ToString(), blocks).OrderBy(x => x.Value);
+                var keys = hd.FindDistancePerKeySize(start, end, encrypted.Decode(), blocks);
                 foreach (var kvp in keys)
                 {
                     if (aggregated.ContainsKey(kvp.Key))
                     {
-                        if (aggregated[kvp.Key] > kvp.Value)
-                        {
-                            aggregated[kvp.Key] = kvp.Value;
-                        }
+                        aggregated[kvp.Key] += kvp.Value;
                     }
                     else
                     {
@@ -90,20 +105,20 @@ namespace Matasano
                 }
             }
 
-            var possibleKey = aggregated.OrderBy(x => x.Value).Take(1).Single();
+            var possibleKey = aggregated.OrderBy(x => x.Value).Take(1);
 
-            return possibleKey.Key * blocks;
+            return possibleKey.Select(x => x.Key).Single();
         }
 
         public bool IsECB(int blockSize)
         {
-            Base64 encrypted = eo.EncryptConsistentKey(new String('A', blockSize), unknownString);
+            Base64 encrypted = eo.EncryptConsistentKey(new String('A', blockSize * 8), unknownString);
             return helper.IsECB(encrypted.Decode());
         }
 
-        public Base64 Encrypt(string craftedBlock)
+        public Base64 Encrypt(string craftedBlock, int startIndex = 0)
         {
-            return eo.EncryptConsistentKey(craftedBlock, unknownString);
+            return eo.EncryptConsistentKey(craftedBlock, unknownString, startIndex);
         }
     }
 }

@@ -10,14 +10,14 @@ namespace Matasano
 {
     public class AESCipher
     {
+        private int blockSizeBits;
         private int blockSize;
-        private int keySize;
         private AESCipherHelper helper;
 
-        public AESCipher(int blockSize = 128, int keySize = 16)
+        public AESCipher(int blockSize = 16)
         {
+            this.blockSizeBits = blockSize * 8;
             this.blockSize = blockSize;
-            this.keySize = keySize;
             helper = new AESCipherHelper(blockSize);
         }
 
@@ -30,7 +30,7 @@ namespace Matasano
                 Key = convertedKey,
                 Mode = CipherMode.ECB,
                 Padding = PaddingMode.None,
-                BlockSize = blockSize
+                BlockSize = blockSizeBits
             };
             ICryptoTransform decrypter = aesAlg.CreateDecryptor();
 
@@ -74,7 +74,7 @@ namespace Matasano
             byte[] xor = new byte[message.Length];
 
             convertedIV.CopyTo(xor, 0);
-            message.Take(message.Length - keySize).ToArray().CopyTo(xor, keySize);
+            message.Take(message.Length - blockSize).ToArray().CopyTo(xor, blockSize);
 
             Bytes outputBuffer = DecryptECBToBytes(key, data);
             
@@ -101,7 +101,7 @@ namespace Matasano
                 Key = key.ToArray(),
                 Mode = CipherMode.ECB,
                 Padding = PaddingMode.None,
-                BlockSize = blockSize
+                BlockSize = blockSizeBits
             };
             ICryptoTransform encryptor = aesAlg.CreateEncryptor();
 
@@ -133,7 +133,7 @@ namespace Matasano
                 Key = key.ToArray(),
                 Mode = CipherMode.ECB,
                 Padding = PaddingMode.None,
-                BlockSize = blockSize
+                BlockSize = blockSizeBits
             };
             ICryptoTransform encryptor = aesAlg.CreateEncryptor();
 
@@ -142,10 +142,10 @@ namespace Matasano
             Bytes encrypted = new Bytes(String.Empty);
             byte[] outputBuffer = iv.ToArray();
 
-            for (int pos = 0; pos < message.Length / keySize; pos++)
+            for (int pos = 0; pos < message.Length / blockSize; pos++)
             {
-                Bytes inputBuffer = new Bytes(message.Skip(pos * keySize).Take(keySize).ToArray()).Xor(new Bytes(outputBuffer));
-                encryptor.TransformBlock(inputBuffer.ToArray(), 0, keySize, outputBuffer, 0);
+                Bytes inputBuffer = new Bytes(message.Skip(pos * blockSize).Take(blockSize).ToArray()).Xor(new Bytes(outputBuffer));
+                encryptor.TransformBlock(inputBuffer.ToArray(), 0, blockSize, outputBuffer, 0);
 
                 encrypted.Add(outputBuffer);
             }

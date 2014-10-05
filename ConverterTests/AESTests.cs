@@ -10,6 +10,8 @@ namespace ConverterTests
     [TestClass]
     public class AESTests
     {
+        private const int blockSize = 16;
+
         [TestMethod]
         public void EncryptECB()
         {
@@ -27,8 +29,12 @@ namespace ConverterTests
         [TestMethod]
         public void EncryptAndDecryptECB()
         {
+            Random r = new Random();
+            byte[] bytes = new byte[r.Next(100)];
+            r.NextBytes(bytes);
+
+            string data = new Bytes(bytes).ToString();
             string key = "YELLOW SUBMARINE";
-            string data = "this is the data";
 
             AESCipher aes = new AESCipher();
             Base64 encrypted = aes.EncryptECB(key, data);
@@ -51,9 +57,14 @@ namespace ConverterTests
         [TestMethod]
         public void EncryptAndDecryptCBC()
         {
+            Random r = new Random();
+            byte[] bytes = new byte[r.Next(100)];
+            r.NextBytes(bytes);
+
+            string data = new Bytes(bytes).ToString();
             string key = "YELLOW SUBMARINE";
-            string data = "this is the data";
-            string iv = new String('\0', 16);
+
+            string iv = new String('\0', blockSize);
 
             AESCipher aes = new AESCipher();
             Base64 encrypted = aes.EncryptCBC(key, data, iv);
@@ -67,7 +78,7 @@ namespace ConverterTests
         {
             string expected = File.ReadAllText(@"TestFiles\AESDecrypted.txt");
             Base64 data = new Base64(new FileInfo(@"TestFiles\AESCBCEncrypted.txt"));
-            string iv = new string('\0', 128);
+            string iv = new string('\0', blockSize);
 
             AESCipher aes = new AESCipher();
             string result = aes.DecryptCBC("YELLOW SUBMARINE", data.ToHex(), iv);
@@ -77,7 +88,7 @@ namespace ConverterTests
         [TestMethod]
         public void DetectECB()
         {
-            AESCipherHelper helper = new AESCipherHelper(16);
+            AESCipherHelper helper = new AESCipherHelper(blockSize);
             string expected = "d880619740a8a19b7840a8a31c810a3d08649af70dc06f4fd5d2d69c744cd283e2dd052f6b641dbf9d11b0348542bb5708649af70dc06f4fd5d2d69c744cd2839475c9dfdbc1d46597949d9c7e82bf5a08649af70dc06f4fd5d2d69c744cd28397a93eab8d6aecd566489154789a6b0308649af70dc06f4fd5d2d69c744cd283d403180c98c8f6db1f2a3f9c4040deb0ab51b29933f2c123c58386b06fba186a";
             string actual = "";
 
@@ -107,10 +118,9 @@ namespace ConverterTests
         [TestMethod]
         public void GenerateKeyWithCorrectLength()
         {
-            int length = 16;
-            AESCipherHelper helper = new AESCipherHelper(length);
+            AESCipherHelper helper = new AESCipherHelper(blockSize);
             Bytes key = helper.GenerateKey();
-            Assert.IsTrue(key.ToHex().Length == length);
+            Assert.IsTrue(key.ToHex().Length == blockSize);
         }
 
         [TestMethod]

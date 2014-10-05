@@ -27,6 +27,11 @@ namespace Matasano
             return new Bytes(Convert.FromBase64String(_data)).ToString();
         }
 
+        public Base64 Substring(int startIndex)
+        {
+            return new Base64(_data.Substring(startIndex));
+        }
+
         public override bool Equals(object obj)
         {
             return _data.Equals(obj.ToString());

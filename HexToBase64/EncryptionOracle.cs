@@ -18,9 +18,9 @@ namespace Matasano
             key = helper.GenerateKey();
         }
 
-        public Base64 EncryptConsistentKey(string data, Base64 unknownString)
+        public Base64 EncryptConsistentKey(string data, Base64 unknownString, int startIndex = 0)
         {
-            string plaintext = data + unknownString.Decode();
+            string plaintext = data + unknownString.Decode().Substring(startIndex);
             return cipher.EncryptECB(key.ToString(), plaintext);
         }
 
