@@ -80,6 +80,9 @@
     <Content Include="TestFiles\AESinECBdetection.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestFiles\Xor.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestFiles\XorEncrypted.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
