@@ -49,10 +49,10 @@ namespace Matasano
 
         public void AddProfile(string email)
         {
-            string santisedEmail = email.Replace("&", "").Replace("=", "");
-            Cookie cookie = new Cookie("email=" + santisedEmail + defaultProfile);
+            string sanitisedEmail = email.Replace("&", "").Replace("=", "");
+            Cookie cookie = new Cookie("email=" + sanitisedEmail + defaultProfile);
 
-            profiles.Add(santisedEmail, cookie);
+            profiles.Add(sanitisedEmail, cookie);
         }
 
         public void AddProfile(string email, string encoded)
