@@ -39,5 +39,27 @@ namespace ConverterTests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        [TestCategory("Set 2 - Challenge 14")]
+        public void BreakMessageWithRandomPrefix()
+        {
+            string expected = "Rollin' in my 5.0\nWith my rag-top down so my hair can blow\nThe girlies on standby waving just to say hi\nDid you stop? No, I just drove by\n";
+            RandomPrefixCracker cracker = new RandomPrefixCracker(unknownString);
+            string actual = cracker.Break();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void FindPrefixLength()
+        {
+            EncryptionOracleWithRandomPrefix eo = new EncryptionOracleWithRandomPrefix();
+            int expected = eo.RandomPrefixLength;
+            RandomPrefixCracker cracker = new RandomPrefixCracker(unknownString);
+            int actual = cracker.FindRandomPrefixLength();
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

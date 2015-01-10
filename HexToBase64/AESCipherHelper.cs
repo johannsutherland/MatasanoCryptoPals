@@ -69,5 +69,13 @@ namespace Matasano
             random.NextBytes(key);
             return new Bytes(key);
         }
+
+        public Bytes GenerateRandomLengthKey()
+        {
+            Random random = new Random();
+            byte[] key = new byte[random.Next(blockSize)];
+            random.NextBytes(key);
+            return new Bytes(key);
+        }
     }
 }

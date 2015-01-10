@@ -10,10 +10,10 @@ namespace Matasano
     public class Cracker
     {
         private readonly HammingDistance hammingDistance;
-        private readonly EncryptionOracle eo;
         private readonly AESCipherHelper helper;
 
-        private readonly Base64 unknownString;
+        protected IEncryptionOracle eo;
+        protected readonly Base64 unknownString;
 
         public Cracker(Base64 unknownString)
         {
@@ -23,7 +23,7 @@ namespace Matasano
             this.unknownString = unknownString;
         }
 
-        public string Break()
+        public string Break(int prefixLength = 0)
         {
             int blockSize = this.FindBlockSize();
 
@@ -35,12 +35,20 @@ namespace Matasano
             char[] foundCharacters = new char[blockSize];
             char[] completed = new char[unknownString.Decode().Length];
             int completedBlocks = 0;
+            string padding = String.Empty;
+            int start =  0;
+
+            if (prefixLength != 0)
+            {
+                padding = new String('A', blockSize - prefixLength);
+                start = blockSize;
+            }
 
             while (true)
             {
                 for (int pos = 0; pos < blockSize; pos++)
                 {
-                    string message = new String('A', blockSize - pos - 1);
+                    string message = padding + new String('A', blockSize - pos - 1);
                     Base64 encryptedMessage = this.Encrypt(message, completedBlocks * blockSize);
 
                     bool found = false;
@@ -50,8 +58,8 @@ namespace Matasano
                         string updatedMessage = message + String.Join("", foundCharacters.Take(pos)) + (char)character;
                         Base64 updatedEncryptedMessage = this.Encrypt(updatedMessage, completedBlocks * blockSize);
 
-                        if (updatedEncryptedMessage.Decode().Substring(0, blockSize) ==
-                            encryptedMessage.Decode().Substring(0, blockSize))
+                        if (updatedEncryptedMessage.Decode().Substring(start, blockSize) ==
+                            encryptedMessage.Decode().Substring(start, blockSize))
                         {
                             foundCharacters[pos] = (char)character;
                             found = true;

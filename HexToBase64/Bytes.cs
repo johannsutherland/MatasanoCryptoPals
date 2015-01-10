@@ -40,6 +40,11 @@ namespace Matasano
             return _data;
         }
 
+        public int Length
+        {
+            get { return _data.Length; }
+        }
+
         public void Add(byte[] array)
         {
             byte[] newArray = new byte[_data.Length + array.Length];

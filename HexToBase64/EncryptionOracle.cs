@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Matasano
 {
-    public class EncryptionOracle
+    public class EncryptionOracle : IEncryptionOracle
     {
-        Random random = new Random();
-        AESCipher cipher = new AESCipher();
-        AESCipherHelper helper = new AESCipherHelper();
-        Bytes key;
+        protected Random random = new Random();
+        protected AESCipher cipher = new AESCipher();
+        protected AESCipherHelper helper = new AESCipherHelper();
+        protected Bytes key;
 
         public EncryptionOracle()
         {
