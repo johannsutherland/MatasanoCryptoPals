@@ -206,7 +206,7 @@ namespace ConverterTests
             for (int i = 0; i < 100; i++)
             {
                 Random r = new Random();
-                Tuple<Base64, string> encrypted = eo.Encrypt(new String((char)r.Next(255), 100));
+                Tuple<Base64, string> encrypted = eo.EncryptWithRandomPadding(new String((char)r.Next(255), 100));
                 Assert.IsTrue((helper.IsECB(encrypted.Item1.Decode()) && encrypted.Item2 == "EBC") || (encrypted.Item2 == "CBC"));
             }
         }

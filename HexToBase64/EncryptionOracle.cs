@@ -24,7 +24,7 @@ namespace Matasano
             return cipher.EncryptECB(key.ToString(), plaintext);
         }
 
-        public Tuple<Base64, string> Encrypt(string data)
+        public Tuple<Base64, string> EncryptWithRandomPadding(string data)
         {
             string plainText = PadData(data);
 
