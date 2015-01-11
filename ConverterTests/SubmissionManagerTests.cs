@@ -19,6 +19,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
+        [TestCategory("Set 2 - Challenge 16")]
         public void BreakSubmissionManager()
         {
             SubmissionManager submissionManager = new SubmissionManager();
