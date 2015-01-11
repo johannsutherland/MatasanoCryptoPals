@@ -6,10 +6,10 @@ using System.Collections.Generic;
 namespace ConverterTests
 {
     [TestClass]
-    public class CookieTest
+    public class ProfileManagerTest
     {
         [TestMethod]
-        public void CookieParserFromString()
+        public void ValuePairParserFromString()
         {
             var valuePairs = "foo=bar&baz=qux&zap=zazzle";
 
@@ -21,7 +21,7 @@ namespace ConverterTests
         }
 
         [TestMethod]
-        public void CookieParserFromInvalidString()
+        public void ValuePairParserFromInvalidString()
         {
             var valuePairs = "foo=bar=1&baz=qux&zap=zazzle";
 
