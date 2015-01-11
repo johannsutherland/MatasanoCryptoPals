@@ -11,25 +11,25 @@ namespace ConverterTests
         [TestMethod]
         public void CookieParserFromString()
         {
-            var cookie = "foo=bar&baz=qux&zap=zazzle";
+            var valuePairs = "foo=bar&baz=qux&zap=zazzle";
 
-            Cookie cookieParser = new Cookie(cookie);
+            ValuePairParser parser = new ValuePairParser(valuePairs);
 
-            Assert.AreEqual(cookieParser["foo"], "bar");
-            Assert.AreEqual(cookieParser["baz"], "qux");
-            Assert.AreEqual(cookieParser["zap"], "zazzle");
+            Assert.AreEqual(parser["foo"], "bar");
+            Assert.AreEqual(parser["baz"], "qux");
+            Assert.AreEqual(parser["zap"], "zazzle");
         }
 
         [TestMethod]
         public void CookieParserFromInvalidString()
         {
-            var cookie = "foo=bar=1&baz=qux&zap=zazzle";
+            var valuePairs = "foo=bar=1&baz=qux&zap=zazzle";
 
-            Cookie cookieParser = new Cookie(cookie);
+            ValuePairParser parser = new ValuePairParser(valuePairs);
 
             try
             {
-                var value = cookieParser["foo"];
+                var value = parser["foo"];
                 Assert.Fail("Key should not exist");
             }
             catch (KeyNotFoundException ex)
@@ -41,18 +41,18 @@ namespace ConverterTests
                 Assert.Fail("Invalid exception");
             }
             
-            Assert.AreEqual(cookieParser["baz"], "qux");
-            Assert.AreEqual(cookieParser["zap"], "zazzle");
+            Assert.AreEqual(parser["baz"], "qux");
+            Assert.AreEqual(parser["zap"], "zazzle");
         }
 
         [TestMethod]
-        public void CookieToString()
+        public void ValuePairToString()
         {
-            var str = "foo=bar&baz=qux&zap=zazzle";
+            var valuePairs = "foo=bar&baz=qux&zap=zazzle";
 
-            Cookie cookie = new Cookie(str);
+            ValuePairParser parser = new ValuePairParser(valuePairs);
 
-            Assert.AreEqual(str, cookie.ToString());
+            Assert.AreEqual(valuePairs, parser.ToString());
         }
 
         [TestMethod]
