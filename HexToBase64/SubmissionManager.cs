@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Matasano
 {
-    class SubmissionManager
+    public class SubmissionManager
     {
         AESCipher cipher = new AESCipher();
         AESCipherHelper helper = new AESCipherHelper();
@@ -33,8 +33,10 @@ namespace Matasano
         public bool IsAdmin(Base64 encrypted)
         {
             string values = cipher.DecryptCBC(key, encrypted, iv);
+            string adminKey = "admin";
+
             ValuePairParser dictionaryManager = new ValuePairParser(values, ';');
-            return dictionaryManager["admin"] == "true";
+            return dictionaryManager.Contains(adminKey) && dictionaryManager[adminKey] == "true";
         }
     }
 }

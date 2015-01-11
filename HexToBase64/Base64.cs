@@ -19,12 +19,22 @@ namespace Matasano
 
         public Hex ToHex()
         {
-            return new Bytes(Convert.FromBase64String(_data)).ToHex();
+            return this.ToBytes().ToHex();
+        }
+
+        public Bytes ToBytes()
+        {
+            return new Bytes(Convert.FromBase64String(_data));
+        }
+
+        public byte[] ToByteArray()
+        {
+            return this.ToBytes().ToArray();
         }
 
         public string Decode()
         {
-            return new Bytes(Convert.FromBase64String(_data)).ToString();
+            return this.ToBytes().ToString();
         }
 
         public Base64 Substring(int startIndex)

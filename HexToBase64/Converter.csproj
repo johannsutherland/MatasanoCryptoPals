@@ -44,6 +44,7 @@
     <Compile Include="Base64.cs" />
     <Compile Include="Bytes.cs" />
     <Compile Include="CharacterCounter.cs" />
+    <Compile Include="SubmissionManagerCracker.cs" />
     <Compile Include="ValuePairParser.cs" />
     <Compile Include="EncryptionOracleWithRandomPrefix.cs" />
     <Compile Include="IEncryptionOracle.cs" />

@@ -27,6 +27,11 @@ namespace Matasano
             get { return values[key]; }
         }
 
+        public bool Contains(string key)
+        {
+            return values.ContainsKey(key);
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
