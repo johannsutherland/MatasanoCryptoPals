@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using Matasano.Helper;
+
 namespace Matasano
 {
     public abstract class CipherBase

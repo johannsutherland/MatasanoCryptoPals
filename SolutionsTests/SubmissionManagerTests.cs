@@ -1,8 +1,8 @@
-﻿using Matasano;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ConverterTests
+using Matasano.Cracker;
+
+namespace Matasano.ExternalSystem.Tests
 {
     [TestClass]
     public class SubmissionManagerTests

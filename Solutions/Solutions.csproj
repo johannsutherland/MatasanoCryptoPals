@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Matasano</RootNamespace>
-    <AssemblyName>HexToBase64</AssemblyName>
+    <AssemblyName>Matasano.CryptoChallenges.Solutions</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,28 +39,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ciphers\AES\AESCipher.cs" />
-    <Compile Include="Ciphers\AES\AESCipherHelper.cs" />
-    <Compile Include="Types\Base64.cs" />
-    <Compile Include="Types\Bytes.cs" />
-    <Compile Include="CharacterHelpers\CharacterCounter.cs" />
-    <Compile Include="Crackers\SubmissionManagerCracker.cs" />
-    <Compile Include="ExternalSystems\Helpers\ValuePairParser.cs" />
-    <Compile Include="Oracles\EncryptionOracleWithRandomPrefix.cs" />
-    <Compile Include="Oracles\IEncryptionOracle.cs" />
+    <Compile Include="Cipher\AES\AESCipher.cs" />
+    <Compile Include="Cipher\AES\AESCipherHelper.cs" />
+    <Compile Include="Type\Base64.cs" />
+    <Compile Include="Type\Bytes.cs" />
+    <Compile Include="Helper\CharacterCounter.cs" />
+    <Compile Include="Cracker\SubmissionManagerCracker.cs" />
+    <Compile Include="Helper\ValuePairParser.cs" />
+    <Compile Include="Oracle\EncryptionOracleWithRandomPrefix.cs" />
+    <Compile Include="Oracle\IEncryptionOracle.cs" />
     <Compile Include="ExternalSystems\ProfileManager.cs" />
-    <Compile Include="Oracles\EncryptionOracle.cs" />
-    <Compile Include="Crackers\ProfileManagerCracker.cs" />
-    <Compile Include="Ciphers\AES\RandomPrefixCracker.cs" />
-    <Compile Include="Types\StringExtensions.cs" />
-    <Compile Include="Ciphers\AES\AESCracker.cs" />
-    <Compile Include="CharacterHelpers\HammingDistance.cs" />
-    <Compile Include="Ciphers\Xor\CipherBase.cs" />
-    <Compile Include="Types\Hex.cs" />
+    <Compile Include="Oracle\EncryptionOracle.cs" />
+    <Compile Include="Cracker\ProfileManagerCracker.cs" />
+    <Compile Include="Cracker\AES\RandomPrefixAESCracker.cs" />
+    <Compile Include="Type\StringExtensions.cs" />
+    <Compile Include="Cracker\AES\AESCracker.cs" />
+    <Compile Include="Helper\HammingDistance.cs" />
+    <Compile Include="Cipher\Xor\CipherBase.cs" />
+    <Compile Include="Type\Hex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExternalSystems\SubmissionManager.cs" />
-    <Compile Include="Ciphers\Xor\XorCipher.cs" />
-    <Compile Include="Ciphers\Xor\XorCracker.cs" />
+    <Compile Include="Cipher\Xor\XorCipher.cs" />
+    <Compile Include="Cracker\XorCracker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

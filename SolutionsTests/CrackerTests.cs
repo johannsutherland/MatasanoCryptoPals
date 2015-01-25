@@ -1,12 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Matasano;
-using System.Diagnostics;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ConverterTests
+namespace Matasano.Cracker.Tests
 {
     [TestClass]
     public class CrackerTests
@@ -45,7 +39,7 @@ namespace ConverterTests
         [TestCategory("Set 2 - Challenge 14")]
         public void BreakMessageWithRandomPrefix()
         {
-            RandomPrefixCracker cracker = new RandomPrefixCracker(unknownString);
+            RandomPrefixAESCracker cracker = new RandomPrefixAESCracker(unknownString);
             string actual = cracker.Break();
 
             Assert.AreEqual(expected, actual);
@@ -56,7 +50,7 @@ namespace ConverterTests
         {
             EncryptionOracleWithRandomPrefix eo = new EncryptionOracleWithRandomPrefix();
             int expected = eo.RandomPrefixLength;
-            RandomPrefixCracker cracker = new RandomPrefixCracker(unknownString);
+            RandomPrefixAESCracker cracker = new RandomPrefixAESCracker(unknownString);
             int actual = cracker.FindRandomPrefixLength();
 
             Assert.AreEqual(expected, actual);

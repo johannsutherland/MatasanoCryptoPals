@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Matasano
+namespace Matasano.Cracker
 {
-    public class RandomPrefixCracker : AESCracker
+    public class RandomPrefixAESCracker : AESCracker
     {
         int? _randomPrefixLength;
 
@@ -22,7 +22,7 @@ namespace Matasano
             }
         }
 
-        public RandomPrefixCracker(Base64 unknownString)
+        public RandomPrefixAESCracker(Base64 unknownString)
             : base(unknownString)
         {
             base.eo = new EncryptionOracleWithRandomPrefix();
@@ -52,7 +52,7 @@ namespace Matasano
             return _randomPrefixLength.Value;
         }
 
-        public new string Break()
+        public string Break()
         {
             return base.Break(this.RandomPrefixLength);
         }

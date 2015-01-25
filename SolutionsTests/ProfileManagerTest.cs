@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Matasano;
 using System.Collections.Generic;
 
-namespace ConverterTests
+using Matasano.Helper;
+using Matasano.Cracker;
+
+namespace Matasano.ExternalSystem.Tests
 {
     [TestClass]
     public class ProfileManagerTest
@@ -32,13 +34,14 @@ namespace ConverterTests
                 var value = parser["foo"];
                 Assert.Fail("Key should not exist");
             }
-            catch (KeyNotFoundException ex)
+            catch (KeyNotFoundException)
             {
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.Fail("Invalid exception");
+                throw;
             }
             
             Assert.AreEqual(parser["baz"], "qux");

@@ -1,8 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Matasano;
 
-namespace ConverterTests
+namespace Matasano.Helper.Tests
 {
     [TestClass]
     public class CharacterCounterTests

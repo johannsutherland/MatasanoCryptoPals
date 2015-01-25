@@ -16,7 +16,7 @@ namespace ConverterTests
             {
                 op1.Xor(op2);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 return;
             }

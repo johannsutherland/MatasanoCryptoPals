@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Matasano;
 using System.IO;
 
-namespace ConverterTests
+using Matasano.Cracker;
+
+namespace Matasano.Cracker.Tests
 {
     [TestClass]
     public class XorCrackerTests

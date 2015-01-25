@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Matasano
+using Matasano.ExternalSystem;
+
+namespace Matasano.Cracker
 {
     public class ProfileManagerCracker
     {

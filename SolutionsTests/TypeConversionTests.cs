@@ -2,10 +2,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Matasano;
 
-namespace ConverterTests
+namespace Matasano.Tests
 {
     [TestClass]
-    public class ConvertFromHexToBase64Tests
+    public class TypeConversionTests
     {
         [TestMethod]
         public void ConvertOneCharacter()

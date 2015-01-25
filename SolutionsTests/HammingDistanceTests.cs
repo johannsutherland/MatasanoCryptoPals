@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Matasano;
 
-namespace ConverterTests
+
+namespace Matasano.Helper.Tests
 {
     [TestClass]
     public class HammingDistanceTests
@@ -41,7 +41,7 @@ namespace ConverterTests
                 var result = hd.FindDistancePerKeySize(2, 10, source, 3);
                 Assert.Fail();
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 return;
             }
@@ -58,7 +58,7 @@ namespace ConverterTests
                 hd.Calculate(str1, str2);
                 Assert.Fail();
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 return;
             }
