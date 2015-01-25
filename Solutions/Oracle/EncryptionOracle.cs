@@ -1,6 +1,5 @@
 ﻿using System;
 
-using Matasano.Cipher;
 using Matasano.Cipher.AES;
 
 namespace Matasano.Oracle

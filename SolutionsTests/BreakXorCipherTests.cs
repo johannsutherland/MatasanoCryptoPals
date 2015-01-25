@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Matasano;
-using Matasano.Cipher.Xor;
 
 namespace Matasano.Cipher.Xor.Tests
 {

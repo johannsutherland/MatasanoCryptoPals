@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Matasano;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Matasano.Tests
 {
