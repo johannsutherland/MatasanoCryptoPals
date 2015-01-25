@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 
 using Matasano.Helper;
+using Matasano.Cipher.Xor;
 
-namespace Matasano.Cipher.Xor
+namespace Matasano.Cracker
 {
-    public abstract class CipherBase
+    public class XorCrackerHelper
     {
-        public abstract string Decrypt(Hex source, string key);
-        public abstract string Encrypt(string source, string key);
-
         private readonly CharacterCounter characterCounter;
+        private readonly XorCipher xorCipher;
 
-        public CipherBase()
+        public XorCrackerHelper()
         {
-            characterCounter = new CharacterCounter();
+            this.characterCounter = new CharacterCounter();
+            this.xorCipher = new XorCipher();
         }
 
         public Dictionary<char, string> TryDecrypt(Hex source)
@@ -25,7 +25,7 @@ namespace Matasano.Cipher.Xor
             foreach (char c in characterCounter.GetAlphabet())
             {
                 string s = new string(c, source.Length);
-                string decrypted = this.Decrypt(source, s);
+                string decrypted = xorCipher.Decrypt(source, s);
 
                 result.Add(c, decrypted);
             }

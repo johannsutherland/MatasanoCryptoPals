@@ -17,24 +17,24 @@ namespace Matasano
             _data = String.Join("", File.ReadAllLines(file.FullName));
         }
 
-        public Hex ToHex()
+        public static implicit operator Hex(Base64 base64)
         {
-            return this.ToBytes().ToHex();
+            return ((Bytes)base64);
         }
 
-        public Bytes ToBytes()
+        public static implicit operator Bytes(Base64 base64)
         {
-            return new Bytes(Convert.FromBase64String(_data));
+            return new Bytes(Convert.FromBase64String(base64._data));
         }
 
         public byte[] ToByteArray()
         {
-            return this.ToBytes().ToArray();
+            return ((Bytes)this).ToArray();
         }
 
         public string Decode()
         {
-            return this.ToBytes().ToString();
+            return ((Bytes)this).ToString();
         }
 
         public Base64 Substring(int startIndex)

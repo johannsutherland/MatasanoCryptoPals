@@ -2,9 +2,9 @@
 
 namespace Matasano.Cipher.Xor
 {
-    public class XorCipher : CipherBase
+    public class XorCipher
     {
-        public override string Encrypt(string source, string key)
+        public string Encrypt(string source, string key)
         {
             string createdKey = PadKey(source, key);
 
@@ -27,7 +27,7 @@ namespace Matasano.Cipher.Xor
             return createdKey;
         }
 
-        public override string Decrypt(Hex source, string key)
+        public string Decrypt(Hex source, string key)
         {
             Hex decrypted = source.Xor(new Hex(key, Hex.InputFormat.String));
             return decrypted.ToString();

@@ -22,14 +22,14 @@ namespace Matasano
             }
         }
 
-        public Hex ToHex()
+        public static implicit operator Hex(Bytes bytes)
         {
-            return new Hex(_data);
+            return new Hex(bytes._data);
         }
 
-        public Base64 ToBase64()
+        public static implicit operator Base64(Bytes bytes)
         {
-            return new Base64(Convert.ToBase64String(_data, Base64FormattingOptions.None));
+            return new Base64(Convert.ToBase64String(bytes._data, Base64FormattingOptions.None));
         }
 
         public byte[] ToArray()

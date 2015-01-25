@@ -81,7 +81,7 @@ namespace Matasano.Cipher.AES.Tests
             string iv = new string('\0', blockSize);
 
             AESCipher aes = new AESCipher();
-            string result = aes.DecryptCBC("YELLOW SUBMARINE", data.ToHex(), iv);
+            string result = aes.DecryptCBC("YELLOW SUBMARINE", data, iv);
             Assert.AreEqual(expected, result);
         }
 
@@ -172,7 +172,7 @@ namespace Matasano.Cipher.AES.Tests
         {
             AESCipherHelper helper = new AESCipherHelper(blockSize);
             Bytes key = helper.GenerateKey();
-            Assert.IsTrue(key.ToHex().Length == blockSize);
+            Assert.IsTrue(((Hex)key).Length == blockSize);
         }
 
         [TestMethod]

@@ -59,6 +59,7 @@
     <Compile Include="CrackerTests.cs" />
     <Compile Include="ProfileManagerTest.cs" />
     <Compile Include="SubmissionManagerTests.cs" />
+    <Compile Include="XorCipherTests.cs" />
     <Compile Include="XorCrackerTests.cs" />
     <Compile Include="XorTests.cs" />
   </ItemGroup>

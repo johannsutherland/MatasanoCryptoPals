@@ -81,30 +81,29 @@ namespace Matasano
             return result.ToString();
         }
 
-        public Bytes ToBytes()
+        public static implicit operator Bytes(Hex hex)
         {
-            byte[] bytes = new byte[_data.Length / 2];
+            byte[] bytes = new byte[hex._data.Length / 2];
             int n = 0;
 
-            while (n * 2 + 2 <= _data.Length)
+            while (n * 2 + 2 <= hex._data.Length)
             {
-                bytes[n] = (byte)int.Parse(_data.Substring(n * 2, 2), System.Globalization.NumberStyles.HexNumber);
+                bytes[n] = (byte)int.Parse(hex._data.Substring(n * 2, 2), System.Globalization.NumberStyles.HexNumber);
                 n++;
             }
 
             return new Bytes(bytes);
         }
 
-        public Base64 ToBase64()
+        public static implicit operator Base64(Hex hex)
         {
-            Bytes bytes = this.ToBytes();
-            return new Base64(Convert.ToBase64String(bytes.ToArray(), Base64FormattingOptions.None));
+            return new Base64(Convert.ToBase64String(((Bytes)hex).ToArray(), Base64FormattingOptions.None));
         }
 
         public Hex Xor(Hex hex)
         {
-            Bytes b1 = this.ToBytes();
-            Bytes b2 = hex.ToBytes();
+            Bytes b1 = this;
+            Bytes b2 = hex;
             return new Hex(b1.Xor(b2));
         }
 

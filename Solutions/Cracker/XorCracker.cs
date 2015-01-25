@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 
 using Matasano.Helper;
-using Matasano.Cipher.Xor;
 
 namespace Matasano.Cracker
 {
@@ -11,20 +10,20 @@ namespace Matasano.Cracker
     {
         private HammingDistance hammingDistance;
         private CharacterCounter characterCounter;
-        private XorCipher cipher;
+        private XorCrackerHelper crackerHelper;
 
         public XorCracker()
         {
             hammingDistance = new HammingDistance();
             characterCounter = new CharacterCounter();
-            cipher = new XorCipher();
+            crackerHelper = new XorCrackerHelper();
         }
 
         public string[] BreakXorFile(Base64 data, int startKeySize = 2, int endKeySize = 60, int numberOfBlocks = 2)
         {
             int take = 10;
 
-            Hex source = data.ToHex();
+            Hex source = data;
             var possibleKeySizes = hammingDistance.FindDistancePerKeySize(startKeySize, endKeySize, source.ToString(), numberOfBlocks).OrderBy(x => x.Value).Select(x => x.Key).Take(take);
 
             foreach (var possibleKeySize in possibleKeySizes)
@@ -38,7 +37,7 @@ namespace Matasano.Cracker
 
                 foreach (var block in transposedBlocks)
                 {
-                    var decrypted = cipher.TryDecrypt(block);
+                    var decrypted = crackerHelper.TryDecrypt(block);
                     var c = characterCounter.FindKey(decrypted);
                     if (c == '\0')
                     {

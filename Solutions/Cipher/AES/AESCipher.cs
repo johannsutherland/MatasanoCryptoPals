@@ -30,17 +30,12 @@ namespace Matasano.Cipher.AES
             };
             ICryptoTransform decrypter = aesAlg.CreateDecryptor();
 
-            byte[] message = data.ToBytes().ToArray();
+            byte[] message = ((Bytes)data).ToArray();
             byte[] outputBuffer = new byte[message.Length];
 
             decrypter.TransformBlock(message, 0, message.Length, outputBuffer, 0);
 
             return new Bytes(outputBuffer);
-        }
-
-        public string DecryptECB(string key, Base64 data)
-        {
-            return this.DecryptECB(key, data.ToHex());
         }
 
         public string DecryptECB(string key, string data)
@@ -57,16 +52,11 @@ namespace Matasano.Cipher.AES
             return helper.RemovePadding(decoded);
         }
 
-        public string DecryptCBC(string key, Base64 data, string iv)
-        {
-            return this.DecryptCBC(key, data.ToHex(), iv);
-        }
-
         public string DecryptCBC(string key, Hex data, string iv)
         {
             byte[] convertedIV = new Bytes(helper.AddPadding(iv)).ToArray();
 
-            byte[] message = data.ToBytes().ToArray();
+            byte[] message = ((Bytes)data).ToArray();
             byte[] xor = new byte[message.Length];
 
             convertedIV.CopyTo(xor, 0);
@@ -107,7 +97,7 @@ namespace Matasano.Cipher.AES
 
             encryptor.TransformBlock(message, 0, message.Length, outputBuffer, 0);
 
-            return new Bytes(outputBuffer).ToBase64();
+            return new Bytes(outputBuffer);
         }
 
         public Base64 EncryptCBC(string data)
@@ -122,7 +112,7 @@ namespace Matasano.Cipher.AES
             return this.EncryptCBC(new Bytes(key), data, new Bytes(iv));
         }
 
-        public Base64 EncryptCBC(Bytes key, string data, Bytes iv)
+        private Base64 EncryptCBC(Bytes key, string data, Bytes iv)
         {
             RijndaelManaged aesAlg = new RijndaelManaged
             {
@@ -146,7 +136,7 @@ namespace Matasano.Cipher.AES
                 encrypted.Add(outputBuffer);
             }
 
-            return encrypted.ToBase64();
+            return encrypted;
         }
     }
 }

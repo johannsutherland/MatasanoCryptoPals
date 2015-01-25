@@ -20,7 +20,7 @@ namespace Matasano.Cracker
             encryptedBytes[22] = (byte)(encryptedBytes[22] ^ 1);
             encryptedBytes[27] = (byte)(encryptedBytes[27] ^ 1);
 
-            return new Bytes(encryptedBytes).ToBase64();
+            return new Bytes(encryptedBytes);
         }
     }
 }

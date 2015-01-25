@@ -55,7 +55,7 @@
     <Compile Include="Type\StringExtensions.cs" />
     <Compile Include="Cracker\AES\AESCracker.cs" />
     <Compile Include="Helper\HammingDistance.cs" />
-    <Compile Include="Cipher\Xor\CipherBase.cs" />
+    <Compile Include="Cracker\XorCrackerHelper.cs" />
     <Compile Include="Type\Hex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExternalSystems\SubmissionManager.cs" />
