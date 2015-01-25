@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Matasano;
-using System.Diagnostics;
+using Matasano.Cipher.Xor;
 
-namespace ConverterTests
+namespace Matasano.Cipher.Xor.Tests
 {
     [TestClass]
     public class BreakXorCipherTests

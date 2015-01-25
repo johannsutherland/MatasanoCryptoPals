@@ -1,5 +1,4 @@
-﻿using System;
-namespace Matasano
+﻿namespace Matasano.Oracle
 {
     public interface IEncryptionOracle
     {

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Matasano.Helper;
+using Matasano.Oracle;
+using Matasano.Cipher.AES;
 
 namespace Matasano.Cracker
 {

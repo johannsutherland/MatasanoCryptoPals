@@ -1,6 +1,8 @@
 ﻿using System;
 
 using Matasano.Helper;
+using Matasano.Cipher;
+using Matasano.Cipher.AES;
 
 namespace Matasano.ExternalSystem
 {

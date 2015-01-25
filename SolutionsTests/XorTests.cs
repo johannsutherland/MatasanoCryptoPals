@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Matasano;
 
-namespace ConverterTests
+namespace Matasano.Tests
 {
     [TestClass]
     public class XorTests

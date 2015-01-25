@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using Matasano.Helper;
+using Matasano.Cipher.AES;
 
 namespace Matasano.ExternalSystem
 {

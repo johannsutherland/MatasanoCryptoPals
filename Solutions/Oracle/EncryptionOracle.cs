@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Matasano
+using Matasano.Cipher;
+using Matasano.Cipher.AES;
+
+namespace Matasano.Oracle
 {
     public class EncryptionOracle : IEncryptionOracle
     {

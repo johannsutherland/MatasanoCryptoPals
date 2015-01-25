@@ -6,7 +6,7 @@ using System.Text;
 
 using Matasano.Helper;
 
-namespace Matasano
+namespace Matasano.Cipher.Xor
 {
     public abstract class CipherBase
     {

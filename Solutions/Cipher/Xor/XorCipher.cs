@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Matasano
+namespace Matasano.Cipher.Xor
 {
     public class XorCipher : CipherBase
     {

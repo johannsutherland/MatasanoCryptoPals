@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Matasano.Oracle;
+
 namespace Matasano.Cracker.Tests
 {
     [TestClass]

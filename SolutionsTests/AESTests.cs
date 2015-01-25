@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Matasano;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace ConverterTests
+using Matasano.Oracle;
+
+namespace Matasano.Cipher.AES.Tests
 {
     [TestClass]
     public class AESTests
