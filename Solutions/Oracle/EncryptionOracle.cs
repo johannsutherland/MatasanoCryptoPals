@@ -6,11 +6,11 @@ namespace Matasano.Oracle
 {
     public class EncryptionOracle : IEncryptionOracle
     {
-        protected Random random = new Random();
-        protected AESCipherECB cipherECB = new AESCipherECB();
-        protected AESCipherCBC cipherCBC = new AESCipherCBC();
+        Random random = new Random();
+        AESCipherECB cipherECB = new AESCipherECB();
+        AESCipherCBC cipherCBC = new AESCipherCBC();
         protected AESCipherHelper helper = new AESCipherHelper();
-        protected Bytes key;
+        Bytes key;
 
         public EncryptionOracle()
         {
