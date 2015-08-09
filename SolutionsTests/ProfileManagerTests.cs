@@ -8,7 +8,7 @@ using Matasano.Cracker;
 namespace Matasano.ExternalSystem.Tests
 {
     [TestClass]
-    public class ProfileManagerTest
+    public class ProfileManagerTests
     {
         [TestMethod]
         public void ValuePairParserFromString()
