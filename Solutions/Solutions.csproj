@@ -57,12 +57,12 @@
     <Compile Include="Type\StringExtensions.cs" />
     <Compile Include="Cracker\AES\AESCracker.cs" />
     <Compile Include="Helper\HammingDistance.cs" />
-    <Compile Include="Cracker\XorCrackerHelper.cs" />
+    <Compile Include="Cracker\Xor\XorCrackerHelper.cs" />
     <Compile Include="Type\Hex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExternalSystems\SubmissionManager.cs" />
     <Compile Include="Cipher\Xor\XorCipher.cs" />
-    <Compile Include="Cracker\XorCracker.cs" />
+    <Compile Include="Cracker\Xor\XorCracker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
