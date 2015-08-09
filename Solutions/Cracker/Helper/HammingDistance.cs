@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Matasano.Helper
 {
-    public class HammingDistance
+    static class HammingDistance
     {
-        public int Calculate(string str1, string str2)
+        public static int Calculate(string str1, string str2)
         {
             if (str1.Length != str2.Length)
                 throw new ArgumentException("String lengths must be equal");
@@ -27,7 +27,7 @@ namespace Matasano.Helper
             return difference;
         }
 
-        public Dictionary<int, float> FindDistancePerKeySize(int startKeySize, int endKeySize, string source, int numberOfBlocks = 2)
+        public static Dictionary<int, float> FindDistancePerKeySize(int startKeySize, int endKeySize, string source, int numberOfBlocks = 2)
         {
             if (numberOfBlocks % 2 != 0)
             {
@@ -52,7 +52,7 @@ namespace Matasano.Helper
                 int totalDistance = 0;
                 for (int i = 0; i * 2 < str.Length; i++)
                 {
-                    totalDistance += this.Calculate(str[2 * i], str[2 * i + 1]);
+                    totalDistance += HammingDistance.Calculate(str[2 * i], str[2 * i + 1]);
                 }
 
                 result.Add(keySize, ((float)totalDistance / (float)keySize));

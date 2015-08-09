@@ -45,9 +45,9 @@
     <Compile Include="Cipher\AES\AESCipherHelper.cs" />
     <Compile Include="Type\Base64.cs" />
     <Compile Include="Type\Bytes.cs" />
-    <Compile Include="Helper\CharacterCounter.cs" />
+    <Compile Include="Cracker\Helper\CharacterCounter.cs" />
     <Compile Include="Cracker\SubmissionManagerCracker.cs" />
-    <Compile Include="Helper\ValuePairParser.cs" />
+    <Compile Include="ExternalSystems\Helper\ValuePairParser.cs" />
     <Compile Include="Oracle\EncryptionOracleWithRandomPrefix.cs" />
     <Compile Include="Oracle\IEncryptionOracle.cs" />
     <Compile Include="ExternalSystems\ProfileManager.cs" />
@@ -56,7 +56,7 @@
     <Compile Include="Cracker\AES\RandomPrefixAESCracker.cs" />
     <Compile Include="Type\StringExtensions.cs" />
     <Compile Include="Cracker\AES\AESCracker.cs" />
-    <Compile Include="Helper\HammingDistance.cs" />
+    <Compile Include="Cracker\Helper\HammingDistance.cs" />
     <Compile Include="Cracker\Xor\XorCrackerHelper.cs" />
     <Compile Include="Type\Hex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="Cipher\Xor\XorCipher.cs" />
     <Compile Include="Cracker\Xor\XorCracker.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -10,7 +10,6 @@ namespace Matasano.Cracker
 {
     public class AESCracker
     {
-        private readonly HammingDistance hammingDistance;
         private readonly AESCipherHelper helper;
 
         protected IEncryptionOracle eo;
@@ -18,7 +17,6 @@ namespace Matasano.Cracker
 
         public AESCracker(Base64 unknownString)
         {
-            this.hammingDistance = new HammingDistance();
             this.eo = new EncryptionOracle();
             this.helper = new AESCipherHelper();
             this.unknownString = unknownString;
@@ -90,8 +88,7 @@ namespace Matasano.Cracker
             for (int i = start; i < end * 3; i++)
             {
                 Base64 encrypted = eo.EncryptConsistentKey(new String('A', i), unknownString);
-                HammingDistance hd = new HammingDistance();
-                var keys = hd.FindDistancePerKeySize(start, end, encrypted.Decode(), blocks);
+                var keys = HammingDistance.FindDistancePerKeySize(start, end, encrypted.Decode(), blocks);
                 foreach (var kvp in keys)
                 {
                     if (aggregated.ContainsKey(kvp.Key))

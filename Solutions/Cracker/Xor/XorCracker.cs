@@ -8,12 +8,10 @@ namespace Matasano.Cracker
 {
     public class XorCracker
     {
-        private HammingDistance hammingDistance;
         private XorCrackerHelper crackerHelper;
 
         public XorCracker()
         {
-            hammingDistance = new HammingDistance();
             crackerHelper = new XorCrackerHelper();
         }
 
@@ -22,7 +20,7 @@ namespace Matasano.Cracker
             int take = 10;
 
             Hex source = data;
-            var possibleKeySizes = hammingDistance.FindDistancePerKeySize(startKeySize, endKeySize, source.ToString(), numberOfBlocks).OrderBy(x => x.Value).Select(x => x.Key).Take(take);
+            var possibleKeySizes = HammingDistance.FindDistancePerKeySize(startKeySize, endKeySize, source.ToString(), numberOfBlocks).OrderBy(x => x.Value).Select(x => x.Key).Take(take);
 
             foreach (var possibleKeySize in possibleKeySizes)
             {
