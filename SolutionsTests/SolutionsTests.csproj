@@ -51,13 +51,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CharacterCounterTests.cs" />
+    <Compile Include="HexTransposeTests.cs" />
     <Compile Include="TypeConversionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BreakXorCipherTests.cs" />
     <Compile Include="AESTests.cs" />
     <Compile Include="HammingDistanceTests.cs" />
     <Compile Include="CrackerTests.cs" />
-    <Compile Include="ProfileManagerTest.cs" />
+    <Compile Include="ProfileManagerTests.cs" />
     <Compile Include="SubmissionManagerTests.cs" />
     <Compile Include="XorCipherTests.cs" />
     <Compile Include="XorCrackerTests.cs" />
