@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cipher\AES\AESCipher.cs" />
+    <Compile Include="Cipher\AES\AESCipherCBC.cs" />
+    <Compile Include="Cipher\AES\AESCipherECB.cs" />
     <Compile Include="Cipher\AES\AESCipherHelper.cs" />
     <Compile Include="Type\Base64.cs" />
     <Compile Include="Type\Bytes.cs" />

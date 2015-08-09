@@ -8,7 +8,7 @@ namespace Matasano.ExternalSystem
     public class ProfileManager
     {
         private Dictionary<string, ValuePairParser> profiles = new Dictionary<string, ValuePairParser>();
-        AESCipher cipher = new AESCipher();
+        AESCipherECB cipher = new AESCipherECB();
         AESCipherHelper helper = new AESCipherHelper();
 
         string defaultProfile = "&uid=10&role=user";
@@ -29,7 +29,7 @@ namespace Matasano.ExternalSystem
 
         public void AddProfile(string email, string encoded)
         {
-            string decoded = cipher.DecryptECB(key, encoded);
+            string decoded = cipher.Decrypt(key, encoded);
 
             if (profiles.ContainsKey(email))
             {
@@ -48,7 +48,7 @@ namespace Matasano.ExternalSystem
 
         public string Encrypted(string email)
         {
-            return cipher.EncryptECB(profiles[email].ToString()).Decode();
+            return cipher.Encrypt(profiles[email].ToString()).Decode();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Matasano.ExternalSystem
 {
     public class SubmissionManager
     {
-        AESCipher cipher = new AESCipher();
+        AESCipherCBC cipher = new AESCipherCBC();
         AESCipherHelper helper = new AESCipherHelper();
 
         string prepend = "comment1=cooking%20MCs;userdata=";
@@ -27,12 +27,12 @@ namespace Matasano.ExternalSystem
             string sanitisedUserInput = userInput.Replace(";", String.Empty).Replace("=", String.Empty);
             string padded = prepend + sanitisedUserInput + append;
 
-            return cipher.EncryptCBC(key, padded, iv);
+            return cipher.Encrypt(key, padded, iv);
         }
 
         public bool IsAdmin(Base64 encrypted)
         {
-            string values = cipher.DecryptCBC(key, encrypted, iv);
+            string values = cipher.Decrypt(key, encrypted, iv);
             string adminKey = "admin";
 
             ValuePairParser dictionaryManager = new ValuePairParser(values, ';');

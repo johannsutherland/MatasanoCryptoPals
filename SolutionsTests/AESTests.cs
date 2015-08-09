@@ -18,8 +18,8 @@ namespace Matasano.Cipher.AES.Tests
             Base64 expected = new Base64(new FileInfo(@"TestFiles\AESEncrypted.txt"));
             string data = File.ReadAllText(@"TestFiles\AESDecrypted.txt");
 
-            AESCipher aes = new AESCipher();
-            Base64 result = aes.EncryptECB("YELLOW SUBMARINE", data);
+            AESCipherECB aes = new AESCipherECB();
+            Base64 result = aes.Encrypt("YELLOW SUBMARINE", data);
 
             Assert.AreEqual(expected.ToString(), result.ToString());
         }
@@ -34,9 +34,9 @@ namespace Matasano.Cipher.AES.Tests
             string data = new Bytes(bytes).ToString();
             string key = "YELLOW SUBMARINE";
 
-            AESCipher aes = new AESCipher();
-            Base64 encrypted = aes.EncryptECB(key, data);
-            string decrypted = aes.DecryptECB(key, encrypted);
+            AESCipherECB aes = new AESCipherECB();
+            Base64 encrypted = aes.Encrypt(key, data);
+            string decrypted = aes.Decrypt(key, encrypted);
 
             Assert.AreEqual(data, decrypted);
         }
@@ -48,8 +48,8 @@ namespace Matasano.Cipher.AES.Tests
             string expected = File.ReadAllText(@"TestFiles\AESDecrypted.txt");
             Base64 data = new Base64(new FileInfo(@"TestFiles\AESEncrypted.txt"));
 
-            AESCipher aes = new AESCipher();
-            string result = aes.DecryptECB("YELLOW SUBMARINE", data);
+            AESCipherECB aes = new AESCipherECB();
+            string result = aes.Decrypt("YELLOW SUBMARINE", data);
             Assert.AreEqual(expected, result);
         }
 
@@ -65,9 +65,9 @@ namespace Matasano.Cipher.AES.Tests
 
             string iv = new String('\0', blockSize);
 
-            AESCipher aes = new AESCipher();
-            Base64 encrypted = aes.EncryptCBC(key, data, iv);
-            string decrypted = aes.DecryptCBC(key, encrypted, iv);
+            AESCipherCBC aes = new AESCipherCBC();
+            Base64 encrypted = aes.Encrypt(key, data, iv);
+            string decrypted = aes.Decrypt(key, encrypted, iv);
 
             Assert.AreEqual(data, decrypted);
         }
@@ -80,8 +80,8 @@ namespace Matasano.Cipher.AES.Tests
             Base64 data = new Base64(new FileInfo(@"TestFiles\AESCBCEncrypted.txt"));
             string iv = new string('\0', blockSize);
 
-            AESCipher aes = new AESCipher();
-            string result = aes.DecryptCBC("YELLOW SUBMARINE", data, iv);
+            AESCipherCBC aes = new AESCipherCBC();
+            string result = aes.Decrypt("YELLOW SUBMARINE", data, iv);
             Assert.AreEqual(expected, result);
         }
 

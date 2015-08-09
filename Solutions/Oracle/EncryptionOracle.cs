@@ -7,7 +7,8 @@ namespace Matasano.Oracle
     public class EncryptionOracle : IEncryptionOracle
     {
         protected Random random = new Random();
-        protected AESCipher cipher = new AESCipher();
+        protected AESCipherECB cipherECB = new AESCipherECB();
+        protected AESCipherCBC cipherCBC = new AESCipherCBC();
         protected AESCipherHelper helper = new AESCipherHelper();
         protected Bytes key;
 
@@ -19,7 +20,7 @@ namespace Matasano.Oracle
         public Base64 EncryptConsistentKey(string data, Base64 unknownString, int startIndex = 0)
         {
             string plaintext = data + unknownString.Decode().Substring(startIndex);
-            return cipher.EncryptECB(key.ToString(), plaintext);
+            return cipherECB.Encrypt(key.ToString(), plaintext);
         }
 
         public Tuple<Base64, string> EncryptWithRandomPadding(string data)
@@ -28,11 +29,11 @@ namespace Matasano.Oracle
 
             if (random.Next(2) == 1)
             {
-                return new Tuple<Base64, string>(cipher.EncryptCBC(plainText), "CBC");
+                return new Tuple<Base64, string>(cipherCBC.Encrypt(plainText), "CBC");
             }
             else
             {
-                return new Tuple<Base64, string>(cipher.EncryptECB(plainText), "EBC");
+                return new Tuple<Base64, string>(cipherECB.Encrypt(plainText), "EBC");
             }
         }
 
