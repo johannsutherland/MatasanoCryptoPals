@@ -10,11 +10,11 @@ namespace Matasano.Cracker.Tests
         [TestMethod]
         public void Decrypt()
         {
-            XorCrackerHelper crackerHelper = new XorCrackerHelper();
+            XorCracker cracker = new XorCracker();
             Hex source = new Hex("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736");
             string expected = "Cooking MC's like a pound of bacon";
             char expectedChar = 'X';
-            var result = crackerHelper.TryDecrypt(source);
+            var result = cracker.TryDecrypt(source);
             Assert.AreEqual(expected, result[expectedChar]);
         }
 
@@ -22,10 +22,10 @@ namespace Matasano.Cracker.Tests
         [TestCategory("Set 1 - Challenge 03")]
         public void DecryptAndFindKey()
         {
-            XorCrackerHelper crackerHelper = new XorCrackerHelper();
+            XorCracker cracker = new XorCracker(); 
             Hex source = new Hex("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736");
             char expected = 'X';
-            var key = crackerHelper.TryDecryptAndFindKey(source);
+            var key = cracker.TryDecryptAndFindKey(source);
             Assert.AreEqual(expected, key);
         }
 
@@ -33,9 +33,9 @@ namespace Matasano.Cracker.Tests
         [TestCategory("Set 1 - Challenge 04")]
         public void DecryptFile()
         {
-            XorCrackerHelper crackerHelper = new XorCrackerHelper();
+            XorCracker cracker = new XorCracker(); 
             string expected = "Now that the party is jumping" + (char)10;
-            string result = crackerHelper.TryDecryptFile(@"TestFiles\XorEncrypted.txt");
+            string result = cracker.TryDecryptFile(@"TestFiles\XorEncrypted.txt");
             Assert.AreEqual(expected, result);
         }
     }
