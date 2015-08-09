@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace Matasano.Helper
 {
-    public class CharacterCounter
+    public static class CharacterCounter
     {
-        public Dictionary<char, int> Frequency(string sequence)
+        public static Dictionary<char, int> Frequency(string sequence)
         {
             var dictionary = new Dictionary<char, int>();
             
@@ -20,7 +20,7 @@ namespace Matasano.Helper
             return dictionary;
         }
 
-        public List<char> GetAlphabet()
+        public static List<char> GetAlphabet()
         {
             var result = Enumerable.Range('A', 'Z' - 'A' + 1).Select(x => (char)x).ToList();
             result.AddRange(Enumerable.Range('a', 'z' - 'a' + 1).Select(x => (char)x).ToList());
@@ -41,7 +41,7 @@ namespace Matasano.Helper
             return result;
         }
 
-        public char FindKey(Dictionary<char, string> decrypted)
+        public static char FindKey(Dictionary<char, string> decrypted)
         {
             var result = new Dictionary<char, float>();
 

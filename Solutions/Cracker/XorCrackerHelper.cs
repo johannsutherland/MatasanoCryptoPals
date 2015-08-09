@@ -9,12 +9,10 @@ namespace Matasano.Cracker
 {
     public class XorCrackerHelper
     {
-        private readonly CharacterCounter characterCounter;
         private readonly XorCipher xorCipher;
 
         public XorCrackerHelper()
         {
-            this.characterCounter = new CharacterCounter();
             this.xorCipher = new XorCipher();
         }
 
@@ -22,7 +20,7 @@ namespace Matasano.Cracker
         {
             var result = new Dictionary<char, string>();
 
-            foreach (char c in characterCounter.GetAlphabet())
+            foreach (char c in CharacterCounter.GetAlphabet())
             {
                 string s = new string(c, source.Length);
                 string decrypted = xorCipher.Decrypt(source, s);
@@ -35,7 +33,7 @@ namespace Matasano.Cracker
 
         public char TryDecryptAndFindKey(Hex source)
         {
-            return characterCounter.FindKey(this.TryDecrypt(source));
+            return CharacterCounter.FindKey(this.TryDecrypt(source));
         }
 
         public string TryDecryptFile(string location)
@@ -44,7 +42,7 @@ namespace Matasano.Cracker
             foreach (string line in lines)
             {
                 var decrypted = this.TryDecrypt(new Hex(line));
-                char c = characterCounter.FindKey(decrypted);
+                char c = CharacterCounter.FindKey(decrypted);
                 if (c != '\0')
                 {
                     return decrypted[c];

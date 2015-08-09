@@ -9,13 +9,11 @@ namespace Matasano.Cracker
     public class XorCracker
     {
         private HammingDistance hammingDistance;
-        private CharacterCounter characterCounter;
         private XorCrackerHelper crackerHelper;
 
         public XorCracker()
         {
             hammingDistance = new HammingDistance();
-            characterCounter = new CharacterCounter();
             crackerHelper = new XorCrackerHelper();
         }
 
@@ -38,7 +36,7 @@ namespace Matasano.Cracker
                 foreach (var block in transposedBlocks)
                 {
                     var decrypted = crackerHelper.TryDecrypt(block);
-                    var c = characterCounter.FindKey(decrypted);
+                    var c = CharacterCounter.FindKey(decrypted);
                     if (c == '\0')
                     {
                         if (foundOne)
