@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Matasano.Helper
 {
-    public static class CharacterCounter
+    static class CharacterCounter
     {
         public static Dictionary<char, int> Frequency(string sequence)
         {

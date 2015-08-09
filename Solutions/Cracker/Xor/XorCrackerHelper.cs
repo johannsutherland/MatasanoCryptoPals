@@ -7,7 +7,7 @@ using Matasano.Cipher.Xor;
 
 namespace Matasano.Cracker
 {
-    public class XorCrackerHelper
+    class XorCrackerHelper
     {
         private readonly XorCipher xorCipher;
 
