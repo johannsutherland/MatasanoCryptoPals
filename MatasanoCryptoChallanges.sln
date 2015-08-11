@@ -3,9 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solutions", "Solutions\Solutions.csproj", "{96F5D1DE-7B05-4952-83EB-96C16960BCB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matasano.Cipher", "Matasano.Cipher\Matasano.Cipher.csproj", "{96F5D1DE-7B05-4952-83EB-96C16960BCB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionsTests", "SolutionsTests\SolutionsTests.csproj", "{C128AE05-157D-4448-8A37-72CB71050466}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matasano.Solutions.UnitTest", "Matasano.Solutions.UnitTest\Matasano.Solutions.UnitTest.csproj", "{C128AE05-157D-4448-8A37-72CB71050466}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Target", "Target\Target.csproj", "{6F976826-F351-4146-B825-0C3FA5710B61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Attacker.Target", "Attacker.Target\Attacker.Target.csproj", "{32A365E2-D412-46D0-B126-84DF7D0B2D60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matasano.Oracle", "Matasano.Oracle\Matasano.Oracle.csproj", "{1562B2D6-FDFE-4B64-9BCA-7B399C225A59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Attacker.Cipher", "Attacker.Cipher\Attacker.Cipher.csproj", "{1CC7669A-0E29-45B8-AC98-DBF8F7428B19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matasano", "Matasano\Matasano.csproj", "{E8534887-C361-4DFD-B73C-A25445B316CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +31,26 @@ Global
 		{C128AE05-157D-4448-8A37-72CB71050466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C128AE05-157D-4448-8A37-72CB71050466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C128AE05-157D-4448-8A37-72CB71050466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F976826-F351-4146-B825-0C3FA5710B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F976826-F351-4146-B825-0C3FA5710B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F976826-F351-4146-B825-0C3FA5710B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F976826-F351-4146-B825-0C3FA5710B61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32A365E2-D412-46D0-B126-84DF7D0B2D60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32A365E2-D412-46D0-B126-84DF7D0B2D60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32A365E2-D412-46D0-B126-84DF7D0B2D60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32A365E2-D412-46D0-B126-84DF7D0B2D60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1562B2D6-FDFE-4B64-9BCA-7B399C225A59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1562B2D6-FDFE-4B64-9BCA-7B399C225A59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1562B2D6-FDFE-4B64-9BCA-7B399C225A59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1562B2D6-FDFE-4B64-9BCA-7B399C225A59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CC7669A-0E29-45B8-AC98-DBF8F7428B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CC7669A-0E29-45B8-AC98-DBF8F7428B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CC7669A-0E29-45B8-AC98-DBF8F7428B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CC7669A-0E29-45B8-AC98-DBF8F7428B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8534887-C361-4DFD-B73C-A25445B316CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8534887-C361-4DFD-B73C-A25445B316CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8534887-C361-4DFD-B73C-A25445B316CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8534887-C361-4DFD-B73C-A25445B316CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
