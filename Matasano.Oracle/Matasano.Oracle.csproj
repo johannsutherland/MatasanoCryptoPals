@@ -34,7 +34,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CBCEncryptionOracle.cs" />
     <Compile Include="EncryptionOracle.cs" />
     <Compile Include="EncryptionOracleWithRandomPrefix.cs" />
     <Compile Include="IEncryptionOracle.cs" />
