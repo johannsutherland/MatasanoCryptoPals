@@ -41,13 +41,13 @@ namespace Matasano.Cipher.AES
             char c = data[data.Length - 1];
             int padding = (int)c;
 
-            if (padding < blockSize)
+            if (padding <= blockSize)
             {
                 for (int i = data.Length - 1; i >= data.Length - padding; i--)
                 {
                     if (data[i] != c)
                     {
-                        throw new Exception("Invalid Padding");
+                        throw new InvalidPaddingException("Invalid Padding");
                     }
                 }
 
@@ -55,7 +55,7 @@ namespace Matasano.Cipher.AES
             }
             else
             {
-                return data;
+                throw new InvalidPaddingException("Invalid Padding");
             }
         }
 

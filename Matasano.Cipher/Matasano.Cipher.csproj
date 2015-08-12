@@ -38,6 +38,7 @@
     <Compile Include="AES\AESCipherCBC.cs" />
     <Compile Include="AES\AESCipherECB.cs" />
     <Compile Include="AES\AESCipherHelper.cs" />
+    <Compile Include="AES\InvalidPaddingException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xor\XorCipher.cs" />
   </ItemGroup>
