@@ -27,7 +27,7 @@ namespace Matasano.Cipher.AES
         {
             if (data.Length % blockSize == 0)
             {
-                return data;
+                return data + new String((char)(blockSize), blockSize);
             }
             else
             {
@@ -41,7 +41,7 @@ namespace Matasano.Cipher.AES
             char c = data[data.Length - 1];
             int padding = (int)c;
 
-            if (padding <= blockSize)
+            if ((padding <= blockSize) && (padding > 0))
             {
                 for (int i = data.Length - 1; i >= data.Length - padding; i--)
                 {
