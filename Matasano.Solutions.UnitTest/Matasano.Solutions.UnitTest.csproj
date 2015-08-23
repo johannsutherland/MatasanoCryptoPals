@@ -60,12 +60,16 @@
     <Compile Include="CrackerTests.cs" />
     <Compile Include="ProfileManagerTests.cs" />
     <Compile Include="SubmissionManagerTests.cs" />
+    <Compile Include="CBCCrackerTests.cs" />
     <Compile Include="ValuePairParserTests.cs" />
     <Compile Include="XorCipherTests.cs" />
     <Compile Include="XorCrackerTests.cs" />
     <Compile Include="XorTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TestFiles\AESCBC.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestFiles\AESCBCEncrypted.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
