@@ -23,6 +23,23 @@ namespace Matasano.Cipher.AES
             return helper.RemovePadding(decoded);
         }
 
+        public bool IsValidPadding(string key, Hex data, string iv)
+        {
+            bool isValid = false;
+
+            try
+            {
+                var decrypted = Decrypt(key, data, iv);
+                isValid = true;
+            }
+            catch (InvalidPaddingException)
+            {
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
         public Base64 Encrypt(string data)
         {
             Bytes key = helper.GenerateKey();
