@@ -3,9 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
 using Target;
-using Attacker.Target;
+using Attacker.Cracker;
 
-namespace Attacker.Target.Tests
+namespace Attacker.Cracker.Tests
 {
     [TestClass]
     public class ProfileManagerTests

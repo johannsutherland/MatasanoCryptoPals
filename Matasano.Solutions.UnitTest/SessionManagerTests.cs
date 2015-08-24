@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Attacker.Target;
+using Attacker.Cracker;
 using Target;
 
-namespace Matasano.Target.Tests
+namespace Attacker.Cracker.Tests
 {
     [TestClass]
     public class CBCCrackerTests

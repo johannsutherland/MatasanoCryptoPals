@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matasano.Solutions.UnitTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Target", "Target\Target.csproj", "{6F976826-F351-4146-B825-0C3FA5710B61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Attacker.Target", "Attacker.Target\Attacker.Target.csproj", "{32A365E2-D412-46D0-B126-84DF7D0B2D60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Attacker.Cracker", "Attacker.Cracker\Attacker.Cracker.csproj", "{32A365E2-D412-46D0-B126-84DF7D0B2D60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matasano.Oracle", "Matasano.Oracle\Matasano.Oracle.csproj", "{1562B2D6-FDFE-4B64-9BCA-7B399C225A59}"
 EndProject

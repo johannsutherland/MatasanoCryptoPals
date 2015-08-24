@@ -94,7 +94,7 @@
       <Project>{1cc7669a-0e29-45b8-ac98-dbf8f7428b19}</Project>
       <Name>Attacker.Cipher</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Attacker.Target\Attacker.Target.csproj">
+    <ProjectReference Include="..\Attacker.Cracker\Attacker.Cracker.csproj">
       <Project>{32a365e2-d412-46d0-b126-84df7d0b2d60}</Project>
       <Name>Attacker.Target</Name>
     </ProjectReference>

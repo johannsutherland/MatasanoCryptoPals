@@ -7,7 +7,7 @@ using Target;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Attacker.Target
+namespace Attacker.Cracker
 {
     public class SessionManagerCracker
     {

@@ -2,7 +2,7 @@
 
 using Target;
 
-namespace Attacker.Target
+namespace Attacker.Cracker
 {
     public class ProfileManagerCracker
     {
