@@ -8,7 +8,7 @@ namespace Matasano.Cipher.AES
     {
         public string Decrypt(string key, Hex data, string iv)
         {
-            byte[] convertedIV = new Bytes(helper.AddPadding(iv)).ToArray();
+            byte[] convertedIV = iv.ToByteArray();
 
             byte[] message = ((Bytes)data).ToArray();
             byte[] xor = new byte[message.Length];
@@ -21,23 +21,6 @@ namespace Matasano.Cipher.AES
             string decoded = outputBuffer.Xor(new Bytes(xor)).ToString();
 
             return helper.RemovePadding(decoded);
-        }
-
-        public bool IsValidPadding(string key, Hex data, string iv)
-        {
-            bool isValid = false;
-
-            try
-            {
-                var decrypted = Decrypt(key, data, iv);
-                isValid = true;
-            }
-            catch (InvalidPaddingException)
-            {
-                isValid = false;
-            }
-
-            return isValid;
         }
 
         public Base64 Encrypt(string data)

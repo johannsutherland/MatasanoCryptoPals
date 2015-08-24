@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SessionManagerCracker.cs" />
     <Compile Include="ProfileManagerCracker.cs" />
     <Compile Include="SubmissionManagerCracker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SessionManager.cs" />
     <Compile Include="ValuePairParser.cs" />
     <Compile Include="ProfileManager.cs" />
     <Compile Include="SubmissionManager.cs" />
@@ -48,6 +49,11 @@
       <Project>{96f5d1de-7b05-4952-83eb-96c16960bcb1}</Project>
       <Name>Matasano.Cipher</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Sessions.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -35,7 +35,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EncryptionOracle.cs" />
-    <Compile Include="EncryptionOracleCBC.cs" />
     <Compile Include="EncryptionOracleWithRandomPrefix.cs" />
     <Compile Include="IEncryptionOracle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

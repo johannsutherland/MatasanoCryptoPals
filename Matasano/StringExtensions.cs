@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Matasano
 {
@@ -17,6 +18,16 @@ namespace Matasano
                     yield return s.Substring(i);
                 }
             }
+        }
+
+        public static byte[] ToByteArray(this string s)
+        {
+            byte[] bytes = new byte[s.Length];
+            for (int i = 0; i < s.Length; i++)
+            {
+                bytes[i] = Convert.ToByte(s[i]);
+            }
+            return bytes;
         }
     }
 }
