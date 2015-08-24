@@ -20,6 +20,7 @@ namespace Attacker.Cracker.Tests
         }
 
         [TestMethod]
+        [TestCategory("Set 3 - Challenge 17")]
         public void CrackUsingInvalidPadding()
         {
             SessionManager sessionManager = new SessionManager();
