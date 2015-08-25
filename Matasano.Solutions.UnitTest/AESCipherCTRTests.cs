@@ -15,9 +15,9 @@ namespace Matasano.Cipher.AES.Tests
             AESCipherCTR cipher = new AESCipherCTR(key, 0);
             Bytes expected = new Bytes(new byte[16]);
 
-            Bytes nonce = new Bytes(cipher.GetNextCounter());
+            string nonce = cipher.GetNextCounter();
 
-            Assert.AreEqual(expected.ToString(), nonce.ToString());
+            Assert.AreEqual(expected.ToString(), nonce);
         }
 
         [TestMethod]
@@ -27,10 +27,23 @@ namespace Matasano.Cipher.AES.Tests
             Bytes expected = new Bytes(new byte[16]);
             expected[8] = 1;
 
-            Bytes nonce = new Bytes(cipher.GetNextCounter());
-            Bytes nextNonce = new Bytes(cipher.GetNextCounter());
+            string nonce = cipher.GetNextCounter();
+            string nextNonce = cipher.GetNextCounter();
 
-            Assert.AreEqual(expected.ToString(), nextNonce.ToString());
+            Assert.AreEqual(expected.ToString(), nextNonce);
+        }
+
+        [TestMethod]
+        [TestCategory("Set 3 - Challenge 18")]
+        public void DecryptAESCTR()
+        {
+            AESCipherCTR cipher = new AESCipherCTR(key, 0);
+            Base64 data = new Base64("L77na/nrFsKvynd6HzOoG7GHTLXsTVu9qvY/2syLXzhPweyyMTJULu/6/kXX0KSvoOLSFQ==");
+            string expected = "Yo, VIP Let's kick it Ice, Ice, baby Ice, Ice, baby ";
+
+            string decrypted = cipher.Decrypt(data.Decode());
+
+            Assert.AreEqual(expected, decrypted);
         }
     }
 }

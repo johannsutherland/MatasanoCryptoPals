@@ -8,23 +8,6 @@ namespace Matasano.Tests
     public class XorTests
     {
         [TestMethod]
-        public void InequalLengths()
-        {
-            Bytes op1 = new Bytes(new byte[10]);
-            Bytes op2 = new Bytes(new byte[11]);
-            try
-            {
-                op1.Xor(op2);
-            }
-            catch (ArgumentException)
-            {
-                return;
-            }
-
-            Assert.Fail();
-        }
-
-        [TestMethod]
         public void OneByteBothZero()
         {
             Bytes op1 = new Bytes(new byte[1] { 0 });

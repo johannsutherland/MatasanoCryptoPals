@@ -69,13 +69,10 @@ namespace Matasano
 
         public Bytes Xor(Bytes bytes)
         {
-            if (_data.Length != bytes.ToArray().Length)
-            {
-                throw new ArgumentException("Lengths must be equal");
-            }
+            int minLength = Math.Min(_data.Length, bytes.Length);
 
-            byte[] result = new byte[_data.Length];
-            for (int i = 0; i < _data.Length; i++)
+            byte[] result = new byte[minLength];
+            for (int i = 0; i < minLength; i++)
             {
                 result[i] = (byte)(_data[i] ^ bytes.ToArray()[i]);
             }
