@@ -64,6 +64,7 @@ namespace Matasano
         public byte this[int index]
         {
             get { return _data[index]; }
+            set { _data[index] = value; }
         }
 
         public Bytes Xor(Bytes bytes)

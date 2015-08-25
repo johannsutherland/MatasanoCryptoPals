@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="AES\AESCipher.cs" />
     <Compile Include="AES\AESCipherCBC.cs" />
+    <Compile Include="AES\AESCipherCTR.cs" />
     <Compile Include="AES\AESCipherECB.cs" />
     <Compile Include="AES\AESCipherHelper.cs" />
     <Compile Include="AES\InvalidPaddingException.cs" />

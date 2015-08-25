@@ -61,6 +61,7 @@
     <Compile Include="ProfileManagerTests.cs" />
     <Compile Include="SubmissionManagerTests.cs" />
     <Compile Include="SessionManagerTests.cs" />
+    <Compile Include="AESCipherCTRTests.cs" />
     <Compile Include="ValuePairParserTests.cs" />
     <Compile Include="XorCipherTests.cs" />
     <Compile Include="XorCrackerTests.cs" />
