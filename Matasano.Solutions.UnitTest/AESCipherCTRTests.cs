@@ -45,5 +45,17 @@ namespace Matasano.Cipher.AES.Tests
 
             Assert.AreEqual(expected, decrypted);
         }
+
+        [TestMethod]
+        public void EncryptAESCTR()
+        {
+            AESCipherCTR cipher = new AESCipherCTR(key, 0);
+            Base64 expected = new Base64("L77na/nrFsKvynd6HzOoG7GHTLXsTVu9qvY/2syLXzhPweyyMTJULu/6/kXX0KSvoOLSFQ==");
+            string data = "Yo, VIP Let's kick it Ice, Ice, baby Ice, Ice, baby ";
+
+            string encrypted = cipher.Encrypt(data);
+
+            Assert.AreEqual(expected.Decode(), encrypted);
+        }
     }
 }

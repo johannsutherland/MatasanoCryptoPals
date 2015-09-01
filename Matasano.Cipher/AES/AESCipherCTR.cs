@@ -38,5 +38,10 @@ namespace Matasano.Cipher.AES
 
             return decrypted.ToString();
         }
+
+        public string Encrypt(string data)
+        {
+            return this.Decrypt(data);
+        }
     }
 }
