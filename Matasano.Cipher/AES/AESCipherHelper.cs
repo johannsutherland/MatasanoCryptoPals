@@ -70,7 +70,7 @@ namespace Matasano.Cipher.AES
         public Bytes GenerateRandomLengthKey()
         {
             Random random = new Random();
-            byte[] key = new byte[random.Next(blockSize - 1) + 1];
+            byte[] key = new byte[random.Next(1, blockSize)];
             random.NextBytes(key);
             return new Bytes(key);
         }

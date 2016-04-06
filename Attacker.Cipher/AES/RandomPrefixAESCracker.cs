@@ -30,7 +30,7 @@ namespace Attacker.Cracker.AES
         public int FindRandomPrefixLength()
         {
             int blockSize = 16;
-            _randomPrefixLength = 16;
+            _randomPrefixLength = 1;
 
             EncryptionOracleWithRandomPrefix encryption = new EncryptionOracleWithRandomPrefix();
 
