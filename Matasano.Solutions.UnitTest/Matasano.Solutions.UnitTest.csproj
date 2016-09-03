@@ -74,6 +74,12 @@
     <Content Include="TestFiles\AESCBCEncrypted.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestFiles\AESCTR.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\AESCTRDecrypted.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestFiles\AESEncrypted.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -97,7 +103,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Attacker.Cracker\Attacker.Cracker.csproj">
       <Project>{32a365e2-d412-46d0-b126-84df7d0b2d60}</Project>
-      <Name>Attacker.Target</Name>
+      <Name>Attacker.Cracker</Name>
     </ProjectReference>
     <ProjectReference Include="..\Matasano.Oracle\Matasano.Oracle.csproj">
       <Project>{1562b2d6-fdfe-4b64-9bca-7b399c225a59}</Project>

@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AESFixedNonceEncryptor.cs" />
     <Compile Include="SessionManager.cs" />
     <Compile Include="ValuePairParser.cs" />
     <Compile Include="ProfileManager.cs" />

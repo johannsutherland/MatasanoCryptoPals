@@ -25,11 +25,11 @@ namespace Attacker.Cipher
             var result = Enumerable.Range('A', 'Z' - 'A' + 1).Select(x => (char)x).ToList();
             result.AddRange(Enumerable.Range('a', 'z' - 'a' + 1).Select(x => (char)x).ToList());
             result.AddRange(Enumerable.Range('0', '9' - '0' + 1).Select(x => (char)x).ToList());
+            result.Add(' ');
             result.Add((char)9);
             result.Add((char)10);
             result.Add(',');
             result.Add('.');
-            result.Add(' ');
             result.Add('?');
             result.Add('!');
             result.Add('[');

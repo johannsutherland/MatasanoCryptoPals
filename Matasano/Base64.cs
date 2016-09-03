@@ -17,6 +17,18 @@ namespace Matasano
             _data = String.Join("", File.ReadAllLines(file.FullName));
         }
 
+        public static Base64[] FromFile(FileInfo file)
+        {
+            string[] lines = File.ReadAllLines(file.FullName);
+            Base64[] encoded = new Base64[lines.Length];
+
+            for (int i = 0; i < lines.Length; i ++)
+            {
+                encoded[i] = new Base64(lines[i]);
+            }
+            return encoded;
+        }
+
         public static implicit operator Hex(Base64 base64)
         {
             return ((Bytes)base64);

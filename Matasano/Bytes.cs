@@ -79,5 +79,31 @@ namespace Matasano
 
             return new Bytes(result);
         }
+
+        public Bytes Substring(int start, int length)
+        {
+            byte[] b = new byte[length];
+            for (int i = 0; i < length; i++)
+            {
+                b[i] = _data[i + start];
+            }
+            return new Bytes(b);
+        }
+
+        public Bytes SafeSubstring(int start, int length)
+        {
+            if (start > _data.Length)
+            {
+                return new Bytes(String.Empty);
+            }
+            else if (_data.Length < start + length)
+            {
+                return Substring(start, _data.Length - start);
+            }
+            else
+            {
+                return Substring(start, length);
+            }
+        }
     }
 }

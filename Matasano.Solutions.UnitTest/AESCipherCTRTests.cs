@@ -1,6 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Matasano.Cipher.AES;
+using System.IO;
+using Attacker.Cipher;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Diagnostics;
+using Target;
+using Attacker.Cracker.AES;
 
 namespace Matasano.Cipher.AES.Tests
 {
@@ -56,6 +64,23 @@ namespace Matasano.Cipher.AES.Tests
             string encrypted = cipher.Encrypt(data);
 
             Assert.AreEqual(expected.Decode(), encrypted);
+        }
+
+        [TestMethod]
+        [TestCategory("Set 3 - Challenge 19")]
+        public void CrackAESCTR()
+        {
+            var encryptedLines = new AESFixedNonceEncryptor().EncryptFile(@"TestFiles\AESCTR.txt");
+            var crackedLines = new AESFixedNonceCracker().Crack(encryptedLines);
+
+            var decryptedLines = File.ReadAllLines(@"TestFiles\AESCTRDecrypted.txt");
+
+            Assert.AreEqual(crackedLines.Count, decryptedLines.Count());
+            for (int i = 0; i < crackedLines.Count; i++)
+            {
+                Assert.AreEqual(crackedLines[i], decryptedLines[i], String.Format("Line {0} differs. {1} doesn't equal {2}"
+                    , i, crackedLines[i], decryptedLines[i]));
+            }
         }
     }
 }

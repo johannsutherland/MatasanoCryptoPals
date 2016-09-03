@@ -19,6 +19,12 @@ namespace Matasano.Cipher.AES
             this.nonce = nonce;
         }
 
+        public AESCipherCTR(long nonce) : base()
+        {
+            this.nonce = nonce;
+            key = helper.GenerateKey().ToString();
+        }
+
         internal string GetNextCounter()
         {
             BitConverter.GetBytes(nonce).CopyTo(blockCounter, 8);
@@ -39,9 +45,14 @@ namespace Matasano.Cipher.AES
             return decrypted.ToString();
         }
 
-        public string Encrypt(string data)
+        public new string Encrypt(string data)
         {
             return this.Decrypt(data);
+        }
+
+        public void ResetNonce()
+        {
+            nonce = 0;
         }
     }
 }

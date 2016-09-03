@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AES\AESFixedNonceCracker.cs" />
     <Compile Include="AES\AESCracker.cs" />
     <Compile Include="AES\RandomPrefixAESCracker.cs" />
     <Compile Include="CharacterCounter.cs" />
@@ -46,13 +47,13 @@
       <Project>{1562b2d6-fdfe-4b64-9bca-7b399c225a59}</Project>
       <Name>Matasano.Oracle</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Matasano\Matasano.csproj">
-      <Project>{e8534887-c361-4dfd-b73c-a25445b316cf}</Project>
-      <Name>Matasano</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Matasano.Cipher\Matasano.Cipher.csproj">
       <Project>{96f5d1de-7b05-4952-83eb-96c16960bcb1}</Project>
       <Name>Matasano.Cipher</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Matasano\Matasano.csproj">
+      <Project>{e8534887-c361-4dfd-b73c-a25445b316cf}</Project>
+      <Name>Matasano</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
