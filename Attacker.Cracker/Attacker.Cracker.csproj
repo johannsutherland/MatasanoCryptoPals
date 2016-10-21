@@ -40,6 +40,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Matasano.Cipher\Matasano.Cipher.csproj">
+      <Project>{96f5d1de-7b05-4952-83eb-96c16960bcb1}</Project>
+      <Name>Matasano.Cipher</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Matasano\Matasano.csproj">
       <Project>{e8534887-c361-4dfd-b73c-a25445b316cf}</Project>
       <Name>Matasano</Name>

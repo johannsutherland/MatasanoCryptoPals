@@ -14,7 +14,7 @@ namespace Attacker.Cracker.Tests
             SessionManager sessionManager = new SessionManager();
 
             var encryptedCookie = sessionManager.GetEncryptedCookie();
-            sessionManager.ReceiveEncryptedCookie(encryptedCookie.Item1, encryptedCookie.Item2);
+            sessionManager.ReceiveEncryptedCookie(encryptedCookie.Data, encryptedCookie.IV);
 
             Assert.AreEqual(sessionManager.decoded, sessionManager.decrypted);
         }

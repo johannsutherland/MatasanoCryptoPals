@@ -23,7 +23,7 @@ namespace Target
             key = helper.GenerateKey().ToString();
         }
 
-        public Tuple<Hex, string> GetEncryptedCookie()
+        public EncryptedData GetEncryptedCookie()
         {
             string[] lines = File.ReadAllLines(SessionValues);
             string line = lines[random.Next(lines.Length)];
@@ -31,7 +31,7 @@ namespace Target
             decoded = new Base64(line).Decode();
             string iv = helper.GenerateKey().ToString();
 
-            return new Tuple<Hex, string>(cipherCBC.Encrypt(key, decoded, iv), iv);
+            return new EncryptedData(cipherCBC.Encrypt(key, decoded, iv), iv);
         }
 
         public void ReceiveEncryptedCookie(Hex data, string iv)

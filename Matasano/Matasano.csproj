@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Base64.cs" />
     <Compile Include="Bytes.cs" />
+    <Compile Include="EncryptedData.cs" />
     <Compile Include="Hex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />

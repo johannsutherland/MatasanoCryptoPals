@@ -2,6 +2,7 @@
 using System.Text;
 
 using Matasano;
+using Matasano.Cipher.AES;
 
 using Target;
 using System.Collections.Generic;
@@ -28,22 +29,22 @@ namespace Attacker.Cracker
             ValidCharacters.Add('\'');
         }
 
-        public string Break(Tuple<Hex, string> encrypted)
+        public string Break(EncryptedData encryptedData)
         {
-            var crackedFirstBlock = CrackFirstCipherBlock(new Tuple<Base64, string>(encrypted.Item1, encrypted.Item2));
-            var crackedRest = CrackCipherBlocks(new Tuple<Base64, string>(encrypted.Item1, encrypted.Item2));
+            var crackedFirstBlock = CrackFirstCipherBlock(encryptedData);
+            var crackedRest = CrackCipherBlocks(encryptedData);
 
             var cracked = crackedFirstBlock + crackedRest;
 
             return cracked;
         }
 
-        private string CrackFirstCipherBlock(Tuple<Base64, string> encrypted)
+        private string CrackFirstCipherBlock(EncryptedData encryptedData)
         {
             StringBuilder sb = new StringBuilder();
 
-            Bytes rawEncrypted = new Bytes(encrypted.Item1.Decode().Substring(0, blockSize));
-            Bytes iv = new Bytes(encrypted.Item2);
+            Bytes rawEncrypted = new Bytes(encryptedData.Data.ToString().Substring(0, blockSize));
+            Bytes iv = new Bytes(encryptedData.IV);
 
             byte[] tampered = new byte[blockSize];
             byte[] decryptedblock = new byte[blockSize];
@@ -76,7 +77,7 @@ namespace Attacker.Cracker
 
                         break;
                     }
-                    catch
+                    catch (InvalidPaddingException)
                     {
                         // Try next one
                     }
@@ -87,15 +88,15 @@ namespace Attacker.Cracker
             return sb.ToString();
         }
 
-        private string CrackCipherBlocks(Tuple<Base64, string> encrypted)
+        private string CrackCipherBlocks(EncryptedData encrypted)
         {
-            var numberOfBlocks = encrypted.Item1.Decode().Length / blockSize;
+            var numberOfBlocks = encrypted.Data.ToString().Length / blockSize;
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < numberOfBlocks - 1; i++)
             {
-                Bytes rawEncrypted = new Bytes(encrypted.Item1.Decode().Substring(i * blockSize, 2 * blockSize));
-                Bytes iv = new Bytes(encrypted.Item2);
+                Bytes rawEncrypted = new Bytes(encrypted.Data.ToString().Substring(i * blockSize, 2 * blockSize));
+                Bytes iv = new Bytes(encrypted.IV);
 
                 byte[] tampered = new byte[blockSize * 2];
                 byte[] decryptedblock = new byte[blockSize];

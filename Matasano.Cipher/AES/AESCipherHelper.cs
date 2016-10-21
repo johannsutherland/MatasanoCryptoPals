@@ -47,7 +47,7 @@ namespace Matasano.Cipher.AES
                 {
                     if (data[i] != c)
                     {
-                        throw new InvalidPaddingException("Invalid Padding");
+                        throw new InvalidPaddingException();
                     }
                 }
 
@@ -55,7 +55,7 @@ namespace Matasano.Cipher.AES
             }
             else
             {
-                throw new InvalidPaddingException("Invalid Padding");
+                throw new InvalidPaddingException();
             }
         }
 
